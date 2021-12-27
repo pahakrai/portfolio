@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "cd .next && vc --production"
+    "deploy": "cd .next && vc --production --token=z3rpISD7iiYfoSpt8K7HPmRj"
   },
   "dependencies": {
     "next": "12.0.7",
