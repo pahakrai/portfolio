@@ -17,7 +17,7 @@ jobs:
       - name: Deploying the project
         env: 
           VERCEL_ORG_ID: xw9uT9ETKLF6Lg0wx74k6A6Z
-          VERCEL_PROJECT_ID: xw9uT9ETKLF6Lg0wx74k6A6Z
+          VERCEL_PROJECT_ID: prj_4nu8SQmPEz8SoUkn790FiaQdoOcu
         run: yarn deploy
       - name: Setup finish
         run: echo "hurray!!"
