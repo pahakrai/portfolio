@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "vc .next --prod --confirm --token=z3rpISD7iiYfoSpt8K7HPmRj && yarn start"
+    "deploy": "vc .next --prod --confirm --token=z3rpISD7iiYfoSpt8K7HPmRj"
   },
   "dependencies": {
     "next": "12.0.7",
