@@ -14,6 +14,11 @@ jobs:
         run: yarn
       - name: Build the project
         run: yarn build
+      - name: Deploying the project
+        env: 
+          VERCEL_ORG_ID: xw9uT9ETKLF6Lg0wx74k6A6Z
+          VERCEL_PROJECT_ID: xw9uT9ETKLF6Lg0wx74k6A6Z
+        run: yarn deploy
       - name: Setup finish
         run: echo "hurray!!"
       # - run: true
