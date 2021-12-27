@@ -3,7 +3,7 @@
 name: Portfolio Vercel 
 on: [push]
 jobs: 
-  print-hello-world;
+  print-hello-world:
     runs-on: ubuntu-latest
     steps:
       - run: echo "hello world!!!"
