@@ -3,8 +3,19 @@
 name: Portfolio Vercel 
 on: [push]
 jobs: 
-  print-hello-world:
+  build-app:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello world!!!"
-      - run: echo "this is step 2"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.0' 
+      - name: Install node_modules
+        run: yarn
+      - name: Build the project
+        run: yarn build
+      - name: Setup finish
+        run: echo "hurray!!"
+      # - run: true
+      # - run: echo "hello world!!!"
+      # - run: echo "this is step 2"
