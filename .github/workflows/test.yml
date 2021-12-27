@@ -20,11 +20,11 @@ jobs:
           mkdir .vercel
           cd .vercel
           touch project.json
-          echo '{"orgId":"xw9uT9ETKLF6Lg0wx74k6A6Z","projectId":"prj_4nu8SQmPEz8SoUkn790FiaQdoOcu"}' > project.json
+          echo '{"orgId":"xw9uT9ETKLF6Lg0wx74k6A6Z","projectId":"prj_oEkeADMfrKUGKCeXgU7HUgdONcvB"}' > project.json
       - name: Deploying the project
         env: 
           VERCEL_ORG_ID: xw9uT9ETKLF6Lg0wx74k6A6Z
-          VERCEL_PROJECT_ID: prj_4nu8SQmPEz8SoUkn790FiaQdoOcu
+          VERCEL_PROJECT_ID: prj_oEkeADMfrKUGKCeXgU7HUgdONcvB
         run: yarn deploy
       - name: Setup finish
         run: echo "hurray!!"
