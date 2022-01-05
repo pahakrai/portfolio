@@ -12,7 +12,7 @@ const Home = () => {
     <Container>
       <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
         <a href="#" class={styles.neonButton}>
-          eat; sleep; code;
+          eat; sleep; code; repeat;
         </a>
       </Box>
       <Box
