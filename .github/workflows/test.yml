@@ -1,21 +1,21 @@
 # vercel pipeline portfolio
 
-name: Portfolio Vercel 
+name: Portfolio Vercel
 on: [push]
-jobs: 
+jobs:
   build-app:
     runs-on: ubuntu-latest
     outputs:
-      text: ${{ steps.finished.outputs.text}}
-    env: 
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      text: ${{steps.finished.outputs.text}}
+    env:
+      VERCEL_PROJECT_ID: ${{secrets.VERCEL_PROJECT_ID}}
+      VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
+      VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.17.0' 
+          node-version: '14.17.0'
       - name: Install node_modules
         run: yarn
       - name: Build the project
@@ -40,9 +40,9 @@ jobs:
       # - run: echo "hello world!!!"
       # - run: echo "this is step 2"
   test-app:
-    needs: build-ap
+    needs: build-app
     runs-on: ubuntu-latest
     env:
-      MY_JOB_OUTPUT: ${{ needs.build-app.outputs.text}}
+      MY_JOB_OUTPUT: ${{needs.build-app.outputs.text}}
     steps:
       - run: echo $MY_JOB_OUTPUT
