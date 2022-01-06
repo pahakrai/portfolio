@@ -116,8 +116,8 @@
 }
 
 .neonButton {
-  --clr-neon: hsl(317 100% 54%);
-  --clr-bg: hsl(323 21% 16%);
+  --clr-neon: hsl(180 100% 54%);
+  --clr-bg: hsl(189 21% 16%);
   font-size: 1rem;
   display: inline-block;
   cursor: pointer;
@@ -133,7 +133,7 @@
 
 .neonButton::before {
   pointer-events: none;
-  content: "";
+  content: '';
   position: absolute;
   background: var(--clr-neon);
   top: 120%;
@@ -147,7 +147,7 @@
 }
 
 .neonButton::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
@@ -162,7 +162,7 @@
 
 .neonButton:hover,
 .neonButton:focus {
-  color:  var(--clr-bg);
+  color: var(--clr-bg);
   text-shadow: none;
 }
 
@@ -174,4 +174,3 @@
 .neonButton:focus::after {
   opacity: 0.5;
 }
-
