@@ -1,0 +1,9 @@
+{
+  "label_email": "Email",
+  "label_username": "Username",
+  "label_password": "Password",
+  "label_phone": "Phone",
+  "placeholder_username": "Enter Username",
+  "placeholder_password": "Enter Password",
+  "err_username_min_characters": "Minimum characters exceeded"
+}
