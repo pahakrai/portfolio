@@ -2,7 +2,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useFormContext } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 
-const SignIn = ({ onSubmit }) => {
+const SignIn = ({ onClickSubmit }) => {
   const intl = useIntl()
   const {
     getValues,
@@ -14,7 +14,7 @@ const SignIn = ({ onSubmit }) => {
 
   const onSubmit = () => {
     // NOTE: pass the values to parent onSubmit action
-    onSumbit(getValues())
+    onClickSubmit(getValues())
   }
 
   const emailInputProps = register('email', {
@@ -32,13 +32,6 @@ const SignIn = ({ onSubmit }) => {
       message: 'Password length should be at least 8 characters'
     }
   })
-
-  console.log(
-    register('email', {
-      required: true,
-      pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i
-    })
-  )
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>

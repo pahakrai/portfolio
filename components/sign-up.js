@@ -1,40 +1,145 @@
-const SignUp = () => {
-  return (
-    <div className="container m-0 p-0">
-      <div className="position-relative">
-        {/* <img src="assets/p2black.svg" className="position-absolute" />
-        <img
-          src="assets/p2blue.svg"
-          className="position-absolute"
-          style="left: 0px; top: 190px;"
-        /> */}
-      </div>
-      <div className="row position-relative ml-4 mt-4 pl-2 pt-3">
-        <i className="fa fa-angle-left"></i>
-      </div>
-      <div className="row mt-0 mb-0 ml-3 pt-5 pb-2">
-        <div className="col-6">
-          <span className="note">Create Account</span>
-        </div>
-      </div>
-      <div className="row mx-3">
-        <div className="col-12 d-flex flex-column">
-          <input type="text" placeholder="Name" className="py-3 mb-5" />
-          <input type="text" placeholder="Email" className="py-3 mb-5" />
-          <input type="text" placeholder="Password" className="py-3" />
-        </div>
-      </div>
-      <div className="row position-relative mx-4 px-2 d-flex justify-content-between align-items-center mt-5 mb-4">
-        <span className="big">Sign Up</span>
-        <div className="sign-in-btn d-flex justify-content-center align-items-center">
-          <i className="fa fa-long-arrow-right"></i>
-        </div>
-      </div>
+import { Form, Button } from 'react-bootstrap'
+import { useFormContext } from 'react-hook-form'
+import { useIntl } from 'react-intl'
 
-      <div className="row position-relative mx-4 px-2 mt-5">
-        <span className="underline">Sign In</span>
-      </div>
-    </div>
+const SignUp = ({ onClickSubmit }) => {
+  const intl = useIntl()
+  const {
+    getValues,
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }
+  } = useFormContext()
+
+  const onSubmit = () => {
+    // NOTE: pass the values to parent onSubmit action
+    onClickSubmit(getValues())
+  }
+
+  const emailInputProps = register('email', {
+    required: { value: true, message: 'the field is required' },
+    pattern: {
+      value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
+      message: 'email pattern do not match'
+    }
+  })
+
+  const passwordInputProps = register('password', {
+    required: { value: true, message: 'Password required' },
+    minLength: {
+      value: 8,
+      message: 'Password length should be at least 8 characters'
+    }
+  })
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Form.Group className="mb-3" controlId="formBasicFirstName">
+        <Form.Label>{intl.formatMessage({ id: 'label_firstname' })}</Form.Label>
+        <Form.Control
+          {...emailInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            setError('email', null)
+            emailInputProps.onChange(e)
+          }}
+          type="email"
+          placeholder={intl.formatMessage({ id: 'placeholder_firstname' })}
+        />
+        {/* <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text> */}
+        <Form.Control.Feedback type="">
+          {errors?.email?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicLastName">
+        <Form.Label>{intl.formatMessage({ id: 'label_lastname' })}</Form.Label>
+        <Form.Control
+          {...emailInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            setError('email', null)
+            emailInputProps.onChange(e)
+          }}
+          type="email"
+          placeholder={intl.formatMessage({ id: 'placeholder_lastname' })}
+        />
+        {/* <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text> */}
+        <Form.Control.Feedback type="">
+          {errors?.email?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPhone">
+        <Form.Label>{intl.formatMessage({ id: 'label_phone' })}</Form.Label>
+        <Form.Control
+          {...emailInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            setError('email', null)
+            emailInputProps.onChange(e)
+          }}
+          type="email"
+          placeholder={intl.formatMessage({ id: 'placeholder_phone' })}
+        />
+        {/* <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text> */}
+        <Form.Control.Feedback type="">
+          {errors?.email?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
+        <Form.Control
+          {...emailInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            setError('email', null)
+            emailInputProps.onChange(e)
+          }}
+          type="email"
+          placeholder={intl.formatMessage({ id: 'placeholder_email' })}
+        />
+        {/* <Form.Text className="text-muted">
+          We'll never share your email with anyone else.
+        </Form.Text> */}
+        <Form.Control.Feedback type="">
+          {errors?.email?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>{intl.formatMessage({ id: 'label_password' })}</Form.Label>
+        <Form.Control
+          {...passwordInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            passwordInputProps.onChange(e)
+          }}
+          type="password"
+          placeholder={intl.formatMessage({
+            id: 'placeholder_password'
+          })}
+        />
+        <Form.Control.Feedback type="">
+          {errors?.password?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Check type="checkbox" label="Check me out" />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        {intl.formatMessage({ id: 'display_submit' })}
+      </Button>
+    </Form>
   )
 }
 
