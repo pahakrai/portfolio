@@ -1,9 +1,12 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { QueryClientProvider } from 'react-query'
+import { ThemeProvider } from '@emotion/react'
 
-import theme from '../lib/theme'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import { setGlobalLanguage } from '../lib/intl'
+import theme, { THEME_TYPE } from '../lib/theme'
 import { getAccessTokenFromReq } from '../lib/auth'
 import { IntlProvider } from '../lib/intl/provider'
 import { languageFilter } from '../lib/intl/checkLanguage'
@@ -14,7 +17,6 @@ import { queryClient } from '../utils/react-query-client'
 
 import Fonts from '../components/fonts'
 import Layout from '../components/layouts/main'
-import { ThemeProvider, lightTheme, darkTheme } from '../lib/theme'
 
 const AppComponent = ({
   Component,
@@ -23,25 +25,26 @@ const AppComponent = ({
   language,
   currentUser
 }) => {
-  const bootstrapTheme = lightTheme || darkTheme
+  const [mode, setMode] = useState(THEME_TYPE.LIGHT)
+  const toggleMode = () => {
+    setTheme(THEME_TYPE.LIGHT ? THEME_TYPE.DARK : THEME_TYPE.LIGHT)
+  }
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ChakraProvider theme={theme}> */}
-      {/* <ThemeProvider theme={bootstrapTheme}> */}
-      <IntlProvider locale={language}>
-        <Fonts />
-        <Layout router={router}>
-          <AnimatePresence exitBeforeEnter initial={true}>
-            <Component
-              {...pageProps}
-              currentUser={currentUser}
-              key={router.route}
-            />
-          </AnimatePresence>
-        </Layout>
-      </IntlProvider>
-      {/* </ThemeProvider> */}
-      {/* </ChakraProvider> */}
+      <ThemeProvider theme={{ theme: theme(mode), toggleTheme: toggleMode }}>
+        <IntlProvider locale={language}>
+          <Fonts />
+          <Layout router={router}>
+            <AnimatePresence exitBeforeEnter initial={true}>
+              <Component
+                {...pageProps}
+                currentUser={currentUser}
+                key={router.route}
+              />
+            </AnimatePresence>
+          </Layout>
+        </IntlProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }

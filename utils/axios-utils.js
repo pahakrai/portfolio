@@ -1,10 +1,11 @@
+import { getAccessToken, getRefreshToken } from '../lib/auth'
 import client from './build-client'
 
 export const request = ({ ...options }) => {
   // tokens from cookies
-  const token = 'randomstring'
+  const token = getAccessToken()
   // TODO: refersh token logic implementation
-  const refreshToken = 'randomstring'
+  const refreshToken = getRefreshToken()
   client.defaults.headers.common.Authorization = `Bearer ${token}`
   const onSuccess = response => response
   const onError = error => {

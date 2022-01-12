@@ -1,17 +1,9 @@
-import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
+import { useTheme } from '@emotion/react'
 
 const ThemeToggleButton = () => {
-  const { toggleColorMode } = useColorMode()
+  const { toggleTheme, theme } = useTheme()
 
-  return (
-    <IconButton
-      aria-label="Toggle theme"
-      colorScheme={useColorModeValue('purple', 'orange')}
-      icon={useColorModeValue(<MoonIcon />, <SunIcon />)}
-      onClick={toggleColorMode}
-    ></IconButton>
-  )
+  return <div aria-label="Toggle theme" onClick={toggleTheme}></div>
 }
 
 export default ThemeToggleButton
