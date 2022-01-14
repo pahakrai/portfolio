@@ -2,7 +2,9 @@
   "users": [
     {
       "id": 1,
-      "name": "Pahak Rai"
+      "name": "Pahak Rai",
+      "email": "rai.pahak@gmail.com",
+      "password": "pahak123"
     }
   ]
 }

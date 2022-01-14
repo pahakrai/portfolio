@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { setGlobalLanguage } from '../lib/intl'
 import theme, { THEME_TYPE } from '../lib/theme'
-import { getAccessTokenFromReq } from '../lib/auth'
 import { IntlProvider } from '../lib/intl/provider'
 import { languageFilter } from '../lib/intl/checkLanguage'
 import { getLanguageFromReq } from '../lib/intl/getLanguageFromReq'
@@ -17,6 +16,7 @@ import { queryClient } from '../utils/react-query-client'
 
 import Fonts from '../components/fonts'
 import Layout from '../components/layouts/main'
+import RouteGuard from '../components/route-guard'
 
 const AppComponent = ({
   Component,
@@ -27,8 +27,9 @@ const AppComponent = ({
 }) => {
   const [mode, setMode] = useState(THEME_TYPE.LIGHT)
   const toggleMode = () => {
-    setTheme(THEME_TYPE.LIGHT ? THEME_TYPE.DARK : THEME_TYPE.LIGHT)
+    setMode(THEME_TYPE.LIGHT ? THEME_TYPE.DARK : THEME_TYPE.LIGHT)
   }
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={{ theme: theme(mode), toggleTheme: toggleMode }}>
@@ -36,11 +37,13 @@ const AppComponent = ({
           <Fonts />
           <Layout router={router}>
             <AnimatePresence exitBeforeEnter initial={true}>
-              <Component
-                {...pageProps}
-                currentUser={currentUser}
-                key={router.route}
-              />
+              <RouteGuard>
+                <Component
+                  {...pageProps}
+                  currentUser={currentUser}
+                  key={router.route}
+                />
+              </RouteGuard>
             </AnimatePresence>
           </Layout>
         </IntlProvider>
@@ -60,17 +63,18 @@ AppComponent.getInitialProps = async appContext => {
   setGlobalLanguage(language)
 
   let data = undefined
-  try {
-    const response = await client.get('/users/1')
-    if (response.data) data = response.data
-  } catch (error) {
-    // if server not connected log error on server
-    console.error(error, 'client error here')
-  }
+  // try {
+  //   const response = await client.get('/users/1')
+  //   if (response.data) data = response.data
+  // } catch (error) {
+  //   // if server not connected log error on server
+  //   console.error(error, 'client error here')
+  // }
 
   let pageProps = {}
 
   // override by child getInitialProps
+  // TODO: check if it even required with updated nextjs
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(
       appContext.ctx,

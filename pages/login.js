@@ -2,30 +2,23 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { FormProvider, useForm } from 'react-hook-form'
 import Layout from '../components/layouts/article'
 import SignIn from '../components/sign-in'
-import { useUserLogin } from '../hooks/api/user'
 
-const Home = () => {
+const Login = () => {
   const methods = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onBlur',
     defaultValues: {},
-    resolver: undefined, // add yup here
+    resolver: undefined,
     context: undefined,
-    criteriaMode: 'all', // firstError
+    criteriaMode: 'firstError',
     shouldFocusError: true,
     shouldUnregister: false,
     shouldUseNativeValidation: false,
     delayError: undefined
   })
 
-  const onSuccess = () => false
-  const onError = () => false
-
-  const { mutate: login, error, loading } = useUserLogin(onSuccess, onError)
-
   const onClickSubmit = values => {
     const { email, password } = values
-    login({ email, password })
   }
 
   return (
@@ -43,4 +36,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Login

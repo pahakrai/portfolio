@@ -20,7 +20,7 @@ const Logo = () => {
     <Link href="/">
       <a>
         <LogoBox>
-          {/* <Image src={footPrintImg} width={20} height={20} alt="logo"/> */}
+          {/* <Image src={logoPath} width={20} height={20} alt="logo"/> */}
           <h2>Next Basic Wireframe</h2>
         </LogoBox>
       </a>

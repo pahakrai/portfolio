@@ -90,8 +90,6 @@ const Three = () => {
         req = requestAnimationFrame(animate)
         frame = frame <= 100 ? frame + 1 : frame
 
-        console.log(frame)
-
         if (frame <= 100) {
           const p = initialCameraPosition
           const rotSpeed = -easeOutCirc(frame / 120) * Math.PI

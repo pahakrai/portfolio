@@ -62,6 +62,7 @@ const SignIn = ({ onClickSubmit }) => {
           onChange={e => {
             // NOTE: override the default behavior of
             // validating on type
+            setError('password', null)
             passwordInputProps.onChange(e)
           }}
           type="password"
