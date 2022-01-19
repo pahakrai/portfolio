@@ -18,19 +18,19 @@ const SignIn = ({ onClickSubmit }) => {
   }
 
   const emailInputProps = register('email', {
-    required: { value: true, message: 'the field is required' },
-    pattern: {
-      value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
-      message: 'email pattern do not match'
-    }
+    // required: { value: true, message: 'the field is required' }
+    // pattern: {
+    //   value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
+    //   message: 'email pattern do not match'
+    // }
   })
 
   const passwordInputProps = register('password', {
-    required: { value: true, message: 'Password required' },
-    minLength: {
-      value: 8,
-      message: 'Password length should be at least 8 characters'
-    }
+    // required: { value: true, message: 'Password required' },
+    // minLength: {
+    //   value: 8,
+    //   message: 'Password length should be at least 8 characters'
+    // }
   })
 
   return (
@@ -39,12 +39,6 @@ const SignIn = ({ onClickSubmit }) => {
         <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
         <Form.Control
           {...emailInputProps}
-          onChange={e => {
-            // NOTE: override the default behavior of
-            // validating on type
-            setError('email', null)
-            emailInputProps.onChange(e)
-          }}
           type="email"
           placeholder={intl.formatMessage({ id: 'placeholder_email' })}
         />
@@ -52,7 +46,7 @@ const SignIn = ({ onClickSubmit }) => {
           We'll never share your email with anyone else.
         </Form.Text> */}
         <Form.Control.Feedback type="">
-          {errors?.email?.message}
+          {errors.email?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -71,15 +65,12 @@ const SignIn = ({ onClickSubmit }) => {
           })}
         />
         <Form.Control.Feedback type="">
-          {errors?.password?.message}
+          {errors.password?.message}
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        {intl.formatMessage({ id: 'display_submit' })}
-      </Button>
     </Form>
   )
 }

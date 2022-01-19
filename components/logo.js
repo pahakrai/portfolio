@@ -1,29 +1,34 @@
 import Link from 'next/link'
 import styled from '@emotion/styled'
+import { Image } from 'react-bootstrap'
 
 const LogoBox = styled.span`
   font-weight: bold;
   font-size: 18px;
   display: inline-flex;
   align-items: center;
-  height: 30px;
-  line-height: 20px;
-  padding: 10px;
+  // height: 30px;
+  // line-height: 20px;
+  // padding: 8px;
 
   &:hover img {
     transform: rotate(20deg);
   }
 `
 
-const Logo = () => {
+const Logo = ({ className }) => {
   return (
     <Link href="/">
-      <a>
-        <LogoBox>
-          {/* <Image src={logoPath} width={20} height={20} alt="logo"/> */}
-          <h2>Next Basic Wireframe</h2>
-        </LogoBox>
-      </a>
+      <LogoBox>
+        <Image
+          src={'/images/pahak.png'}
+          fluid
+          roundedCircle
+          width={60}
+          height={60}
+          alt="logo"
+        />
+      </LogoBox>
     </Link>
   )
 }

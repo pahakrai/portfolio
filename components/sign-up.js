@@ -1,4 +1,4 @@
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useFormContext } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 
@@ -35,46 +35,25 @@ const SignUp = ({ onClickSubmit }) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Form.Group className="mb-3" controlId="formBasicFirstName">
-        <Form.Label>{intl.formatMessage({ id: 'label_firstname' })}</Form.Label>
-        <Form.Control
-          {...emailInputProps}
-          onChange={e => {
-            // NOTE: override the default behavior of
-            // validating on type
-            setError('email', null)
-            emailInputProps.onChange(e)
-          }}
-          type="email"
-          placeholder={intl.formatMessage({ id: 'placeholder_firstname' })}
-        />
-        {/* <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text> */}
-        <Form.Control.Feedback type="">
-          {errors?.email?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicLastName">
-        <Form.Label>{intl.formatMessage({ id: 'label_lastname' })}</Form.Label>
-        <Form.Control
-          {...emailInputProps}
-          onChange={e => {
-            // NOTE: override the default behavior of
-            // validating on type
-            setError('email', null)
-            emailInputProps.onChange(e)
-          }}
-          type="email"
-          placeholder={intl.formatMessage({ id: 'placeholder_lastname' })}
-        />
-        {/* <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text> */}
-        <Form.Control.Feedback type="">
-          {errors?.email?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
+      <Row>
+        {/* NOTE: Check why on small screen column do not break */}
+        <Form.Group as={Col} controlId="formGridFirstname">
+          <Form.Label>
+            {intl.formatMessage({ id: 'label_firstname' })}
+          </Form.Label>
+          <Form.Control
+            placeholder={intl.formatMessage({ id: 'placeholder_firstname' })}
+          />
+        </Form.Group>
+        <Form.Group as={Col} className="mb-3" controlId="formGridLastname">
+          <Form.Label>
+            {intl.formatMessage({ id: 'label_lastname' })}
+          </Form.Label>
+          <Form.Control
+            placeholder={intl.formatMessage({ id: 'placeholder_lastname' })}
+          />
+        </Form.Group>
+      </Row>
       <Form.Group className="mb-3" controlId="formBasicPhone">
         <Form.Label>{intl.formatMessage({ id: 'label_phone' })}</Form.Label>
         <Form.Control
@@ -85,7 +64,6 @@ const SignUp = ({ onClickSubmit }) => {
             setError('email', null)
             emailInputProps.onChange(e)
           }}
-          type="email"
           placeholder={intl.formatMessage({ id: 'placeholder_phone' })}
         />
         {/* <Form.Text className="text-muted">
@@ -133,12 +111,6 @@ const SignUp = ({ onClickSubmit }) => {
           {errors?.password?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        {intl.formatMessage({ id: 'display_submit' })}
-      </Button>
     </Form>
   )
 }

@@ -1,41 +1,22 @@
+import axios from 'axios'
+import Router from 'next/router'
 import { Col, Container, Row } from 'react-bootstrap'
-import { FormProvider, useForm } from 'react-hook-form'
+import { dehydrate, QueryClient } from 'react-query'
 import Layout from '../components/layouts/article'
-import SignIn from '../components/sign-in'
-import { useUserLogin } from '../hooks/api/user'
+import { withAuthRedirect } from '../helpers/redirect'
+import { fetchCurrentUser, useCurrentUser } from '../hooks/api/user'
+import { getAccessToken, getAccessTokenFromReq } from '../lib/auth'
+import { isServer } from '../utils/build-client'
+import { compose } from 'recompose'
 
-const Home = () => {
-  const methods = useForm({
-    mode: 'onSubmit',
-    reValidateMode: 'onBlur',
-    defaultValues: {},
-    resolver: undefined, // add yup here
-    context: undefined,
-    criteriaMode: 'all', // firstError
-    shouldFocusError: true,
-    shouldUnregister: false,
-    shouldUseNativeValidation: false,
-    delayError: undefined
-  })
-
-  const onSuccess = () => false
-  const onError = () => false
-
-  const { mutate: login, error, loading } = useUserLogin(onSuccess, onError)
-
-  const onClickSubmit = values => {
-    const { email, password } = values
-    login({ email, password })
-  }
-
+const Home = ({ currentUser }) => {
+  const { currentUser: user } = useCurrentUser()
   return (
     <Layout>
       <Container>
         <Row className="justify-content-md-center">
           <Col sm="4">
-            <FormProvider {...methods}>
-              <SignIn onClickSubmit={onClickSubmit} />
-            </FormProvider>
+            <p>Hello {(currentUser || user)?.email} you are logged in</p>
           </Col>
         </Row>
       </Container>
@@ -43,4 +24,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default compose(withAuthRedirect({}))(Home)

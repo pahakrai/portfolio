@@ -1,17 +1,22 @@
 import axios from 'axios'
+import { logout } from '../hooks/logout'
 import {
   clearToken,
   getAccessToken,
   getRefreshToken,
   setToken
 } from '../lib/auth'
+import { getCurrentLanguage } from '../lib/intl/persist'
 
-const UNAUTHORIZED_EXCEPTION = 'UNAUTHORIZED_EXCEPTION'
 // replace from process env config
 const API_BASE_URL = 'http://localhost:3000/'
-
+const accessToken = getAccessToken()
 const client = axios.create({
-  baseURL: API_BASE_URL
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
+  }
 })
 
 export const fetchAccessTokenAsync = async (access, refresh) => {
@@ -35,13 +40,13 @@ export const refreshToken = async (access, refresh) => {
   try {
     if (access && refresh) {
       const response = await fetchAccessTokenAsync()
-      const json = await response.json()
-      token = json.data.refreshToken
+      const token = await response.json().data.token
+
       if (!token) {
         throw new Error('Refresh token invalid')
       }
       if (!isServer()) {
-        setToken(token)
+        setToken({ refresh_token: refresh, access_token: token })
       }
     }
   } catch (error) {
@@ -76,14 +81,20 @@ const composeInterceptors =
 
 const languageInterceptor = (reqContext = {}) => {
   // language header interceptors
-  return { headers: { ...reqContext.headers, lang: 'en' } }
+  const language = getCurrentLanguage()
+  return {
+    headers: { ...reqContext.headers, 'Accept-Language': language || 'en' }
+  }
 }
 
 const securityInterceptor = (reqContext = {}) => {
   const access_token = getAccessToken()
   // security header interceptors
   return {
-    headers: { ...reqContext.headers, Authorization: `Bearer ${access_token}` }
+    headers: {
+      ...(access_token ? { Authorization: `Bearer ${access_token}` } : {}),
+      ...reqContext.headers
+    }
   }
 }
 
@@ -98,10 +109,7 @@ const errorInterceptor = reqContext => {
   // can add interceptor for logging on error
   return {
     ...reqContext,
-    requestErrorInterceptors: [
-      ...(reqContext.requestErrorInterceptors || []),
-      () => false
-    ],
+    requestErrorInterceptors: [...(reqContext.requestErrorInterceptors || [])],
     responseErrorInterceptors: [
       ...(reqContext.responseErrorInterceptors || []),
       async function (error) {
@@ -121,27 +129,13 @@ const errorInterceptor = reqContext => {
 
 const apiInterceptors = composeInterceptors(
   languageInterceptor,
-  securityInterceptor,
+  // securityInterceptor,
   loggerInterceptor,
   errorInterceptor
 )
 
-const request = options => {
+const request = async options => {
   const interceptors = apiInterceptors(options)
-  // Request interceptor for API calls
-  client.interceptors.request.use(
-    async config => {
-      config.headers = {
-        ...(interceptors?.headers || {}),
-        Accept: 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded'
-      }
-      return config
-    },
-    error => {
-      Promise.reject(error)
-    }
-  )
 
   interceptors?.responseErrorInterceptors?.map(errorInterceptor => {
     return client.interceptors.response.use(response => {

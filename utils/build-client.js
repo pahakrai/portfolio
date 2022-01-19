@@ -1,4 +1,9 @@
 import axios from 'axios'
+import { getAccessTokenFromReq } from '../lib/auth'
+
+export const isServer = () => {
+  return typeof window === 'undefined'
+}
 
 // NOTE: MOSLTY USED FOR getInitialProps
 // IN CASE OF REQUIREMENT OF SERVER RENDERING / CLIENT RENDERING
@@ -6,14 +11,15 @@ import axios from 'axios'
 const axiosClient = (req = {}) => {
   let client
   if (typeof window === 'undefined') {
+    const access_token = getAccessTokenFromReq(req)
     // TODO: from env config
-    const BASE_URL_SERVER = 'http://localhost:4000/'
+    const BASE_URL_SERVER = 'http://localhost:3000/'
     // we are on the server
     client = axios.create({
       baseURL:
         // replace from env config
         BASE_URL_SERVER,
-      headers: req.headers
+      headers: { ...req.headers, Authorization: `Bearer ${access_token}` }
     })
   } else {
     // we must be on the browser

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
+import { useCurrentUser } from '../hooks/api/user'
 
 // USE OBSERVABLE user IN LOCALSTORAGE FROM UserService
 
@@ -7,11 +8,11 @@ const RouteGuard = ({ children }) => {
   const router = useRouter()
   const [authorized, setAuthorized] = useState(false)
 
-  const currentUser = true // temp test
+  const { currentUser, loading: userLoading } = useCurrentUser() // temp test
 
   useEffect(() => {
     // on initial load - run auth check
-    authCheck(router.asPath)
+    authCheck(router.pathname)
 
     // on route change start - hide page content by setting authorized to false
     const hideContent = () => setAuthorized(false)
@@ -25,13 +26,11 @@ const RouteGuard = ({ children }) => {
       router.events.off('routeChangeStart', hideContent)
       router.events.off('routeChangeComplete', authCheck)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function authCheck(url) {
+  const authCheck = url => {
     // redirect to login page if accessing a private page and not logged in
-    const publicPaths = ['/login']
+    const publicPaths = ['/login', '/signup']
     const path = url.split('?')[0]
     // NOTE: USE currentUser OR LOCALSTORAGE user DATA
     if (!currentUser && !publicPaths.includes(path)) {

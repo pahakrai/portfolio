@@ -1,3 +1,4 @@
+import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import buildClient from '../../utils/build-client'
 
@@ -10,11 +11,17 @@ export default async function (req, res) {
   }
 
   const { email, password } = req.body
-  const client = buildClient(req)
-  // dev test from json db
 
-  if (email === 'rai.pahak@gmail.com' && password === 'pahak123') {
-    res.stausCode = 401
+  // dev test from json db
+  const users = await axios.get(`http://localhost:4000/users/`, {
+    email,
+    password
+  })
+
+  if (!users || users.length === 0) {
+    res.statusCode = 401
+    res.end('Error')
+    return
   }
 
   res.json({
@@ -25,5 +32,6 @@ export default async function (req, res) {
       KEY
     )
   })
+
   //   res.status(200).json({ name: 'John Doe' })
 }

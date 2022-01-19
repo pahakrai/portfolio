@@ -1,45 +1,43 @@
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from 'react-query'
 import { registAuthListener } from '../../lib/auth'
 import request from '../../utils/api-utils'
 
 // auth and user network request and query hooks
-const fetchCurrentUser = () => {
-  return request({ url: '/auth/current-user' })
+export const fetchCurrentUser = options => {
+  return request({
+    url: '/api/current-user',
+    method: 'get',
+    ...(options || {})
+  })
 }
+
+// const fetchUserById = id => {
+//   // some api
+// }
+
+// const queryByIDExample = id => {
+//   return useQuery(['user', id], fetchUserById)
+// }
 
 const login = data => {
   return request({ url: '/api/login', method: 'post', data })
 }
 
 const signUpUser = data => {
-  return request({ url: '/auth/signup/current-user', method: 'post', data })
+  return request({ url: '/api/signup', method: 'post', data })
 }
 
 export const useUserLogin = (onSuccess, onError) => {
   return useMutation(login, { onSuccess, onError })
 }
 
+export const getCurrentUser = (onSuccess, onError) => {
+  return useMutation(fetchCurrentUser, { onSuccess, onError })
+}
+
 export const useCurrentUser = (onSuccess, onError) => {
-  const [authed, setAuthed] = React.useState(false)
-
-  // NOTE: FOR REFERENCE RELATED TO GRAPHQL
-  //   const { data, loading } =
-  //     useQuery('current-user', getCurrentUser,
-  //     {
-  //       skip: !authed,
-  //       onSuccess: data => {
-  //         const currentUser = data
-  //         if (currentUser) {
-  //           args?.onCompleted?.(currentUser)
-  //         } else {
-  //           args?.onError?.()
-  //         }
-  //       },
-  //       onError: () => {
-  //         args?.onError?.()
-  //       }
-  //     })
-
+  const [authed, setAuthed] = useState(false)
   const { data, loading, isFetching, error, isError } = useQuery(
     'current-user',
     fetchCurrentUser,
@@ -47,11 +45,10 @@ export const useCurrentUser = (onSuccess, onError) => {
       enabled: authed,
       onSuccess,
       onError,
-      select: () => {
-        // custom data interceptor for structuring
-      }
+      retry: false
     }
   )
+
   useEffect(() => {
     const handler = registAuthListener(authed => {
       setAuthed(authed)
@@ -61,5 +58,5 @@ export const useCurrentUser = (onSuccess, onError) => {
     }
   }, [])
 
-  return { currentUser: data, loading: loading || isFetching }
+  return { currentUser: data?.data?.user, loading: loading || isFetching }
 }
