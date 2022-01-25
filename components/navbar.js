@@ -2,6 +2,7 @@ import Logo from './logo'
 import NextLink from 'next/link'
 import React from 'react'
 
+import ThemeToggle from './theme-toggle'
 import ThemeToggleButton from './theme-toggle-button'
 import { useIntl } from 'react-intl'
 import { Navbar, Nav, Container, Button } from 'react-bootstrap'
@@ -69,13 +70,18 @@ const prepareNavLinks = currentUser => {
             priority: 1,
             link: '/works',
             display_text: intl.formatMessage({ id: 'display_works' })
+          },
+          {
+            priority: 2,
+            link: '/subscription',
+            display_text: intl.formatMessage({ id: 'display_subscription' })
           }
         ]
       : [])
   ]
 }
 
-const Navigation = props => {
+const NavBar = props => {
   // from react-query hooks
   const { currentUser } = useCurrentUser()
   const router = useRouter()
@@ -109,25 +115,28 @@ const Navigation = props => {
             ))}
         </Nav>
         {currentUser && (
-          <Button
-            variant="outline-success"
-            onClick={() => {
-              // logout mutation and cleartoken can be parallel
+          <>
+            <ThemeToggle />
+            <Button
+              variant="outline-success"
+              onClick={() => {
+                // logout mutation and cleartoken can be parallel
 
-              // clear access and refresh token
-              // clear react queryClient cache
-              logout()
+                // clear access and refresh token
+                // clear react queryClient cache
+                logout()
 
-              // push to home page
-              router.push('/')
-            }}
-          >
-            Logout
-          </Button>
+                // push to home page
+                router.push('/')
+              }}
+            >
+              Logout
+            </Button>
+          </>
         )}
       </Navbar.Collapse>
     </NavbarWrapper>
   )
 }
 
-export default Navigation
+export default NavBar

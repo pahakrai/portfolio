@@ -1,17 +1,17 @@
 import React from 'react'
 import Router from 'next/router'
-import { format, UrlObject } from 'url'
-// TODO: test and use react query for fetching currenct user preload
-import { isServer } from '../utils/build-client'
-
+import { format } from 'url'
 import axios from 'axios'
+import { dehydrate } from 'react-query'
+
 import {
   getAccessTokenFromReq,
   getRefreshTokenFromReq,
   getAccessToken,
   getRefreshToken
 } from '../lib/auth'
-import { dehydrate } from 'react-query'
+// TODO: test and use react query for fetching currenct user preload
+import { isServer } from '../utils/build-client'
 
 const redirectUrl = ctx => {
   // create and format redirect url

@@ -1,6 +1,8 @@
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { useFormContext } from 'react-hook-form'
 import { useIntl } from 'react-intl'
+
+import InputSuggestion from './input-suggestion'
 
 const SignUp = ({ onClickSubmit }) => {
   const intl = useIntl()
@@ -37,7 +39,7 @@ const SignUp = ({ onClickSubmit }) => {
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Row>
         {/* NOTE: Check why on small screen column do not break */}
-        <Form.Group as={Col} controlId="formGridFirstname">
+        <Form.Group as={Col} className="mb-3" controlId="formGridFirstname">
           <Form.Label>
             {intl.formatMessage({ id: 'label_firstname' })}
           </Form.Label>
@@ -54,25 +56,35 @@ const SignUp = ({ onClickSubmit }) => {
           />
         </Form.Group>
       </Row>
-      <Form.Group className="mb-3" controlId="formBasicPhone">
+      <Form.Group className="mb-3" controlId="formBasicPhone" style={{}}>
         <Form.Label>{intl.formatMessage({ id: 'label_phone' })}</Form.Label>
-        <Form.Control
-          {...emailInputProps}
-          onChange={e => {
-            // NOTE: override the default behavior of
-            // validating on type
-            setError('email', null)
-            emailInputProps.onChange(e)
+        <div
+          style={{
+            position: 'absolute',
+            padding: '0.375rem 0.75rem',
+            paddingLeft: '10px',
+            zIndex: 1
           }}
+        >
+          <p>+81</p>
+        </div>
+        <Form.Control
           placeholder={intl.formatMessage({ id: 'placeholder_phone' })}
+          aria-label="Phone"
+          aria-describedby="basic-addon1"
+          style={{
+            paddingLeft: '40px',
+            // borderRadius is required again
+            // because of the prefix icon/text
+            borderRadius: '3px'
+          }}
         />
-        {/* <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text> */}
+
         <Form.Control.Feedback type="">
-          {errors?.email?.message}
+          {errors?.phone?.message}
         </Form.Control.Feedback>
       </Form.Group>
+      <InputSuggestion />
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
         <Form.Control

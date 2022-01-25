@@ -4,7 +4,11 @@ import { AnimatePresence } from 'framer-motion'
 import { QueryClientProvider, Hydrate } from 'react-query'
 import { ThemeProvider } from '@emotion/react'
 
+import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 import { setGlobalLanguage } from '../lib/intl'
 import theme, { THEME_TYPE } from '../lib/theme'
@@ -22,27 +26,32 @@ import buildClient, { isServer } from '../utils/build-client'
 import { queryClient } from '../utils/react-query-client'
 
 import Fonts from '../components/fonts'
-import Layout from '../components/layouts/main'
+import LayoutMain from '../components/layouts/main'
 import RouteGuard from '../components/route-guard'
 import axios from 'axios'
 
 const AppComponent = ({ Component, pageProps, router }) => {
   const [mode, setMode] = useState(THEME_TYPE.LIGHT)
-  const toggleMode = () => {
-    setMode(THEME_TYPE.LIGHT ? THEME_TYPE.DARK : THEME_TYPE.LIGHT)
+  const toggleMode = mode => {
+    setMode(mode)
   }
 
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <ThemeProvider theme={{ theme: theme(mode), toggleTheme: toggleMode }}>
+        <ThemeProvider
+          theme={{
+            ...theme(mode),
+            toggleTheme: toggleMode
+          }}
+        >
           <IntlProvider locale={pageProps.language}>
             <Fonts />
-            <Layout router={router}>
+            <LayoutMain router={router}>
               <AnimatePresence exitBeforeEnter initial={true}>
                 <Component {...pageProps} key={router.route} />
               </AnimatePresence>
-            </Layout>
+            </LayoutMain>
           </IntlProvider>
         </ThemeProvider>
       </Hydrate>

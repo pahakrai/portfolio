@@ -1,26 +1,32 @@
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
-import { IoLogoFreebsdDevil } from 'react-icons/io'
-import Navbar from '../navbar'
+import NavBar from '../navbar'
+import NavBarBottom from '../navbar-bottom'
 
-const ContainerFull = styled.div(`
+const ContainerFull = styled(Container)`
   padding-left: 0;
   padding-right: 0;
   // height: 100vh;
-`)
-const Main = props => {
+`
+
+const MainContainer = styled.main`
+  background-color: ${props => props.theme.colors.bodyColor};
+`
+
+const LayoutMain = props => {
   return (
-    <div as="main">
+    <MainContainer>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pahak Rai - Homepage</title>
       </Head>
-      <Navbar path={props.router.asPath} />
+      <NavBar path={props.router.asPath} />
       <ContainerFull fluid>{props.children}</ContainerFull>
       {/* SOME FOOTER HERE FOR LARGE SCREEN ONLY */}
-    </div>
+      <NavBarBottom />
+    </MainContainer>
   )
 }
 
-export default Main
+export default LayoutMain

@@ -52,7 +52,7 @@ const Login = () => {
     })
     if (user.data) {
       setAccessToken(res.data.token)
-      setTimeout(() => router.push('/'))
+      router.push('/')
     }
   }
 

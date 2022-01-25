@@ -14,8 +14,7 @@ const accessToken = getAccessToken()
 const client = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
-    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
+    'Content-Type': 'application/json'
   }
 })
 
@@ -57,21 +56,6 @@ export const refreshToken = async (access, refresh) => {
     }
   }
   return token
-}
-
-export const getSecurityParams = () => {
-  //   const TIMESTAMP = moment.utc().valueOf().toString()
-  //   const apiSecurityParam = getAPIHeader(
-  //     Config.WORKSPACE,
-  //     Config.WORKSPACE_SECRET
-  //   )
-
-  //   return {
-  //     workspace: apiSecurityParam?.workspace,
-  //     timestamp: apiSecurityParam?.timestamp?.toString() || TIMESTAMP,
-  //     'safe-key': apiSecurityParam?.['safe-key']
-  //   }
-  return {}
 }
 
 const composeInterceptors =
@@ -129,13 +113,27 @@ const errorInterceptor = reqContext => {
 
 const apiInterceptors = composeInterceptors(
   languageInterceptor,
-  // securityInterceptor,
+  securityInterceptor,
   loggerInterceptor,
   errorInterceptor
 )
 
 const request = async options => {
   const interceptors = apiInterceptors(options)
+
+  // Request interceptor for API calls
+  client.interceptors.request.use(
+    async config => {
+      config.headers = {
+        ...config.headers,
+        ...(interceptors?.headers || {})
+      }
+      return config
+    },
+    error => {
+      Promise.reject(error)
+    }
+  )
 
   interceptors?.responseErrorInterceptors?.map(errorInterceptor => {
     return client.interceptors.response.use(response => {

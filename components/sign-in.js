@@ -17,21 +17,8 @@ const SignIn = ({ onClickSubmit }) => {
     onClickSubmit(getValues())
   }
 
-  const emailInputProps = register('email', {
-    // required: { value: true, message: 'the field is required' }
-    // pattern: {
-    //   value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
-    //   message: 'email pattern do not match'
-    // }
-  })
-
-  const passwordInputProps = register('password', {
-    // required: { value: true, message: 'Password required' },
-    // minLength: {
-    //   value: 8,
-    //   message: 'Password length should be at least 8 characters'
-    // }
-  })
+  const emailInputProps = register('email')
+  const passwordInputProps = register('password')
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -39,6 +26,12 @@ const SignIn = ({ onClickSubmit }) => {
         <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
         <Form.Control
           {...emailInputProps}
+          onChange={e => {
+            // NOTE: override the default behavior of
+            // validating on type
+            setError('email', null)
+            passwordInputProps.onChange(e)
+          }}
           type="email"
           placeholder={intl.formatMessage({ id: 'placeholder_email' })}
         />

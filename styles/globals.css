@@ -14,3 +14,349 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: 'transparent';
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-slide {
+  width: 80%;
+}
+
+.progress-bar-wat {
+  background-color: #fff;
+}
+
+/* .swiper-slide:nth-child(2n) {
+  width: 60%;
+}
+
+.swiper-slide:nth-child(3n) {
+  width: 40%;
+} */
+
+.pinput {
+  padding-left: 32px;
+}
+
+.bottombar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  width: 100%;
+  background: lightcyan;
+  transition: all 0.3s ease;
+  z-index: 100;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.bottombar.close {
+  height: 16px;
+  background-color: transparent;
+  border-radius: 16px;
+}
+
+/* ===== Reusable code - Here ===== */
+.bottombar li {
+  height: 50px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.bottombar header .image,
+.bottombar .icon {
+  min-width: 60px;
+  border-radius: 6px;
+}
+
+.bottombar .icon {
+  min-width: 60px;
+  border-radius: 6px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.bottombar .text,
+.bottombar .icon {
+  color: #707070;
+  transition: all 0.3s ease;
+}
+
+.bottombar .text {
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 1;
+}
+.bottombar.close .text {
+  opacity: 0;
+}
+/* =========================== */
+
+.bottombar header {
+  position: relative;
+}
+
+.bottombar header .image-text {
+  display: flex;
+  align-items: center;
+}
+.bottombar header .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+header .image-text .name {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+header .image-text .profession {
+  font-size: 16px;
+  margin-top: -2px;
+  display: block;
+}
+
+.bottombar header .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottombar header .image img {
+  width: 40px;
+  border-radius: 6px;
+}
+
+.bottombar header .toggle {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  transform: translateY(-50%) rotate(180deg);
+  height: 25px;
+  width: 25px;
+  background-color: #fff;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.dark .bottombar header .toggle {
+  color: var(--text-color);
+}
+
+.bottombar.close .toggle {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.bottombar .menu {
+  margin-top: 40px;
+}
+
+.bottombar li.search-box {
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bottombar li.search-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: #fff;
+  color: #707070;
+  border-radius: 6px;
+  font-size: 17px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.bottombar li a {
+  list-style: none;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.bottombar li a:hover {
+  background-color: #fff;
+}
+.bottombar li a:hover .icon,
+.bottombar li a:hover .text {
+  color: var(--bottombar-color);
+}
+body.dark .bottombar li a:hover .icon,
+body.dark .bottombar li a:hover .text {
+  color: var(--text-color);
+}
+
+.bottombar .menu-bar {
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+.menu-bar::-webkit-scrollbar {
+  display: none;
+}
+.bottombar .menu-bar .mode {
+  border-radius: 6px;
+  background-color: #fff;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.menu-bar .mode .sun-moon {
+  height: 50px;
+  width: 60px;
+}
+
+.mode .sun-moon i {
+  position: absolute;
+}
+.mode .sun-moon i.sun {
+  opacity: 0;
+}
+body.dark .mode .sun-moon i.sun {
+  opacity: 1;
+}
+body.dark .mode .sun-moon i.moon {
+  opacity: 0;
+}
+
+.menu-bar .bottom-content .toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.toggle-switch .switch {
+  position: relative;
+  height: 22px;
+  width: 40px;
+  border-radius: 25px;
+  background-color: #707070;
+  transition: all 0.3s ease;
+}
+
+.switch::before {
+  content: '';
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+body.dark .switch::before {
+  left: 20px;
+}
+
+.home {
+  position: absolute;
+  top: 0;
+  top: 0;
+  left: 250px;
+  height: 100vh;
+  width: calc(100% - 250px);
+  background-color: var(--body-color);
+  transition: all 0.3s ease;
+}
+.home .text {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 12px 60px;
+}
+
+.bottombar.close ~ .home {
+  left: 78px;
+  height: 100vh;
+  width: calc(100% - 78px);
+}
+
+body.dark .home .text {
+  color: #707070;
+}
+
+.typeahead-custom {
+  /* do something */
+}
+
+.typeahead-custom input {
+  padding-left: 40px;
+}
+
+.typeahead-icon {
+  position: relative;
+}
+
+.typeahead-icon .searchicon {
+  position: absolute;
+  text-align: center;
+  padding: 0.375rem 0.75rem;
+  padding-left: 16px;
+  z-index: 1;
+}
+
+/* .typeahead-icon .form-control {
+  padding-right: 36px;
+} */

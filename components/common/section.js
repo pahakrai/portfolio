@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
+import isPropValid from '@emotion/is-prop-valid'
+import styled from '@emotion/styled'
 
 const StyledDiv = styled(motion.div, {
   shouldForwardProp: prop => {
-    return shouldForwardProp(prop) || prop === 'transition'
+    return isPropValid(prop) || prop === 'transition'
   }
 })
 

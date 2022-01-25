@@ -1,10 +1,12 @@
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
+import { compose } from 'recompose'
 import Layout from '../components/layouts/article'
 import SignUp from '../components/sign-up'
+import { withAuthRedirect } from '../helpers/redirect'
 
-const SignUp = () => {
+const SignUpPage = () => {
   const intl = useIntl()
   const methods = useForm({
     mode: 'onSubmit',
@@ -85,4 +87,6 @@ const SignUp = () => {
 //   return {}
 // }
 
-export default SignUp
+export default compose(
+  withAuthRedirect({ route: '/', redirectIfAuthed: true })
+)(SignUpPage)
