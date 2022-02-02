@@ -2,16 +2,15 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
 import NavBar from '../navbar'
-import NavBarBottom from '../navbar-bottom'
 
 const ContainerFull = styled(Container)`
   padding-left: 0;
   padding-right: 0;
-  // height: 100vh;
+  height: 100vh;
 `
 
 const MainContainer = styled.main`
-  background-color: ${props => props.theme.colors.bodyColor};
+  background-color: ${props => props.theme.colors.themeColor1};
 `
 
 const LayoutMain = props => {
@@ -23,8 +22,6 @@ const LayoutMain = props => {
       </Head>
       <NavBar path={props.router.asPath} />
       <ContainerFull fluid>{props.children}</ContainerFull>
-      {/* SOME FOOTER HERE FOR LARGE SCREEN ONLY */}
-      <NavBarBottom />
     </MainContainer>
   )
 }

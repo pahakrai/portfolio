@@ -69,7 +69,7 @@ AppComponent.getInitialProps = async acx => {
   // }
   // let currentUserData
   // try {
-  //   const response = await axios.get('http://localhost:3000/api/current-user', {
+  //   const response = await axios.get(`${process.env.API_BASE_URL}/current-user`, {
   //     headers: {
   //       Authorization: `Bearer ${access_token}`
   //     }

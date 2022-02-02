@@ -1,13 +1,39 @@
 import React from 'react'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
-
 import SwiperCore, { Pagination } from 'swiper'
 
 import '../styles/Home.module.css'
 import { P } from './common'
+import TaskFrame from './task-frame'
 
 SwiperCore.use([Pagination])
+
+const taskList = [
+  {
+    type: 'Delivery',
+    icon: '/images/pahak.png',
+    caption: 'Delivery',
+    onClick: () => false
+  },
+  {
+    type: 'Subscribe',
+    icon: '/images/pahak.png',
+    caption: 'Subscribe',
+    onClick: () => false
+  },
+  {
+    type: 'Location',
+    icon: '/images/pahak.png',
+    caption: 'Location',
+    onClick: () => false
+  },
+  {
+    type: 'Schedule',
+    icon: '/images/pahak.png',
+    caption: 'Schedule',
+    onClick: () => false
+  }
+]
 
 export default function Carousel() {
   return (
@@ -24,104 +50,26 @@ export default function Carousel() {
         }}
         className="mySwiper"
       >
-        <SwiperSlide
-          style={{
-            width: '33.3%',
-            marginLeft: '16px'
-          }}
-        >
-          <div
+        {taskList.map((task, idx) => (
+          <SwiperSlide
             style={{
-              border: '3px solid #00000090',
-              padding: '10px',
-              borderRadius: '16px',
-              height: '100%',
-              width: '100%'
+              width: '33.3%',
+              marginLeft: '16px'
             }}
-            className="text-center justify-content-center"
           >
-            <img
-              style={{
-                objectFit: 'cover'
-              }}
-              className="d-block w-100"
-              src="https://elfsight.com/wp-content/uploads/2019/10/image-slider-screenshot-1.jpg"
-              alt="First slide"
-            />
-            <P>some text</P>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide style={{ width: '33.3%', marginLeft: '16px' }}>
-          <div
-            style={{
-              border: '3px solid #00000090',
-              padding: '10px',
-              borderRadius: '16px',
-              height: '100%',
-              width: '100%'
-            }}
-            className="text-center justify-content-center"
-          >
-            <img
-              style={{
-                objectFit: 'cover'
-              }}
-              className="d-block w-100"
-              src="https://elfsight.com/wp-content/uploads/2019/10/image-slider-screenshot-1.jpg"
-              alt="First slide"
-            />
-            <P>some text</P>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide style={{ width: '33.3%', marginLeft: '16px' }}>
-          <div
-            style={{
-              border: '3px solid #00000090',
-              padding: '10px',
-              borderRadius: '16px',
-              height: '100%',
-              width: '100%'
-            }}
-            className="text-center justify-content-center"
-          >
-            <img
-              style={{
-                objectFit: 'cover'
-              }}
-              className="d-block w-100"
-              src="https://elfsight.com/wp-content/uploads/2019/10/image-slider-screenshot-1.jpg"
-              alt="First slide"
-            />
-            <P>some text</P>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide
-          style={{
-            width: '33.3%',
-            marginLeft: '16px'
-          }}
-        >
-          <div
-            style={{
-              border: '3px solid #00000090',
-              padding: '10px',
-              borderRadius: '16px',
-              height: '100%',
-              width: '100%'
-            }}
-            className="text-center justify-content-center"
-          >
-            <img
-              style={{
-                objectFit: 'cover'
-              }}
-              className="d-block w-100"
-              src="https://elfsight.com/wp-content/uploads/2019/10/image-slider-screenshot-1.jpg"
-              alt="First slide"
-            />
-            <P>some text</P>
-          </div>
-        </SwiperSlide>
+            <TaskFrame className="text-center justify-content-center">
+              <img
+                style={{
+                  objectFit: 'cover'
+                }}
+                className="d-block w-100"
+                src={task.icon}
+                alt={task.type}
+              />
+              <P style={{ textAlign: 'center' }}>{task.caption}</P>
+            </TaskFrame>
+          </SwiperSlide>
+        ))}
         <SwiperSlide
           style={{
             width: '16px'

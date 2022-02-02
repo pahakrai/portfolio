@@ -1,14 +1,14 @@
 import { Row, Col, Button } from 'react-bootstrap'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useIntl } from 'react-intl'
 import { compose } from 'recompose'
 
 import { withAuthRedirect } from '../helpers/redirect'
 
-import SignUp from '../components/sign-up'
-import { PageContainer } from '../components/common'
+import LocationForm from '../components/location'
+import { H3, P, PageContainer } from '../components/common'
 
-const SignUpPage = () => {
+const LocationPage = () => {
   const intl = useIntl()
   const methods = useForm({
     mode: 'onSubmit',
@@ -25,18 +25,9 @@ const SignUpPage = () => {
 
   return (
     <PageContainer>
-      <Row>
-        <Col>
-          <p> Sign Up </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <FormProvider {...methods}>
-            <SignUp />
-          </FormProvider>
-        </Col>
-      </Row>
+      <H3>Provide Your Location</H3>
+      <P>Where will your bin(s) be kept</P>
+      <LocationForm />
       <Row>
         <Col>
           <Button variant="primary" type="submit" style={{ width: '100%' }}>
@@ -48,6 +39,4 @@ const SignUpPage = () => {
   )
 }
 
-export default compose(
-  withAuthRedirect({ route: '/', redirectIfAuthed: true })
-)(SignUpPage)
+export default compose(withAuthRedirect({}))(LocationPage)

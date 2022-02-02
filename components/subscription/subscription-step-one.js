@@ -1,8 +1,10 @@
 import { debounce } from 'lodash'
-import { forwardRef, useCallback, useImperativeHandle } from 'react'
+import { useIntl } from 'react-intl'
 import { Form, Button } from 'react-bootstrap'
 import { useFormContext } from 'react-hook-form'
-import { useIntl } from 'react-intl'
+import { forwardRef, useCallback, useImperativeHandle } from 'react'
+
+import SelectCard from '../select-card'
 
 const StepOne = forwardRef(({ onChangeValues }, ref) => {
   const intl = useIntl()
@@ -14,29 +16,37 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
     formState: { errors }
   } = useFormContext()
 
-  const onClickNext = () => {
-    let prevfocus = false
+  const validateFields = () => {
+    const { inputOne, inputTwo } = getValues()
+    const error = false
+    if (!inputOne) {
+      setFieldError('inputOne', 'required', !error)
+      error = true
+    }
 
-    // setError(
-    //   'inputOne',
-    //   {
-    //     type: 'manual',
-    //     message: 'Dont Forget Your Username Should Be Cool!'
-    //   },
-    //   { shouldFocus: true }
-    // )
-
-    // setError(
-    //   'inputTwo',
-    //   {
-    //     type: 'manual',
-    //     message: 'Dont Forget Your Username Should Be Cool!'
-    //   },
-    //   { shouldFocus: true }
-    // )
+    if (!inputTwo) {
+      setFieldError('inputTwo', 'required', !error)
+      error = true
+    }
+    return !error
   }
 
-  const onClickPrev = () => {}
+  const setFieldError = (fieldName, errorMsg, focus) => {
+    setError(
+      fieldName,
+      { type: 'manual', message: errorMsg || 'required' },
+      { shouldFocus: focus }
+    )
+  }
+
+  const onClickNext = onValidate => {
+    const validated = validateFields()
+    if (validated) onValidate()
+  }
+
+  const onClickPrev = cb => {
+    cb()
+  }
 
   const onSubmit = () => {
     // NOTE: pass the values to parent onSubmit action
@@ -59,6 +69,7 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <SelectCard />
       <Form.Group className="mb-3" controlId="formBasicInputOne">
         <Form.Label>{intl.formatMessage({ id: 'label_input_one' })}</Form.Label>
         <Form.Control

@@ -13,7 +13,7 @@ import {
 // TODO: test and use react query for fetching currenct user preload
 import { isServer } from '../utils/build-client'
 
-const redirectUrl = ctx => {
+export const redirectUrl = ctx => {
   // create and format redirect url
   const url = {
     pathname: ctx.pathname,
@@ -35,7 +35,7 @@ export const withAuthRedirect = options => Page => {
     static async getInitialProps(ctx) {
       const _route = options?.route
         ? options.route
-        : `/login?redirect=${redirectUrl(ctx)}`
+        : `/login-info/?redirect=${redirectUrl(ctx)}`
       let access_token
       if (isServer() && ctx.req?.headers?.cookie) {
         access_token = getAccessTokenFromReq(ctx.req)
@@ -46,7 +46,11 @@ export const withAuthRedirect = options => Page => {
       let isLoggedIn = false
       try {
         const response = await axios.get(
-          'http://localhost:3000/api/current-user',
+          `${
+            isServer()
+              ? process.env.API_BASE_URL
+              : process.env.NEXT_PUBLIC_API_BASE_URL
+          }/current-user`,
           {
             headers: {
               Authorization: `Bearer ${access_token}`

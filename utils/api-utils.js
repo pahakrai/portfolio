@@ -1,18 +1,22 @@
 import axios from 'axios'
+import { compose } from 'recompose'
+import { getConfig } from 'next/config'
+
 import { logout } from '../hooks/logout'
-import {
-  clearToken,
-  getAccessToken,
-  getRefreshToken,
-  setToken
-} from '../lib/auth'
 import { getCurrentLanguage } from '../lib/intl/persist'
+import { getAccessToken, getRefreshToken, setToken } from '../lib/auth'
+
+// runtime
+const publicRuntimeConfig =
+  (typeof getConfig === 'function' &&
+    getConfig() &&
+    getConfig().publicRuntimeConfig) ||
+  {}
 
 // replace from process env config
-const API_BASE_URL = 'http://localhost:3000/'
-const accessToken = getAccessToken()
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 const client = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -22,6 +26,7 @@ export const fetchAccessTokenAsync = async (access, refresh) => {
   const data = {
     query: `mutation REFRESH_TOKEN {refreshToken(refreshToken: "${refresh}") {${USER_TOKEN_FIELDS}}}`
   }
+  const { publicRuntimeConfig: Config } = getConfig()
   return fetch(Config.GRAPHQL_URL, {
     method: 'post',
     credentials: 'include',
@@ -57,11 +62,6 @@ export const refreshToken = async (access, refresh) => {
   }
   return token
 }
-
-const composeInterceptors =
-  (...fns) =>
-  x =>
-    fns.reduce((v, f) => f(v), x)
 
 const languageInterceptor = (reqContext = {}) => {
   // language header interceptors
@@ -111,7 +111,7 @@ const errorInterceptor = reqContext => {
   }
 }
 
-const apiInterceptors = composeInterceptors(
+const apiInterceptors = compose(
   languageInterceptor,
   securityInterceptor,
   loggerInterceptor,

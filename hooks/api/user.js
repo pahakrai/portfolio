@@ -6,7 +6,7 @@ import request from '../../utils/api-utils'
 // auth and user network request and query hooks
 export const fetchCurrentUser = options => {
   return request({
-    url: '/api/current-user',
+    url: '/current-user',
     method: 'get',
     ...(options || {})
   })
@@ -21,11 +21,11 @@ export const fetchCurrentUser = options => {
 // }
 
 const login = data => {
-  return request({ url: '/api/login', method: 'post', data })
+  return request({ url: '/login', method: 'post', data })
 }
 
 const signUpUser = data => {
-  return request({ url: '/api/signup', method: 'post', data })
+  return request({ url: '/signup', method: 'post', data })
 }
 
 export const useUserLogin = (onSuccess, onError) => {

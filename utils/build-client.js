@@ -11,10 +11,10 @@ export const isServer = () => {
 // BUT NOT IN USE BECAUSE OF HEADER ISSUES
 const axiosClient = (req = {}) => {
   let client
-  if (typeof window === 'undefined') {
+  if (isServer()) {
     const access_token = getAccessTokenFromReq(req)
     // TODO: from env config
-    const BASE_URL_SERVER = 'http://localhost:3000/'
+    const BASE_URL_SERVER = process.env.API_BASE_URL
     // we are on the server
     client = axios.create({
       baseURL:

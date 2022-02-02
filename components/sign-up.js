@@ -84,7 +84,6 @@ const SignUp = ({ onClickSubmit }) => {
           {errors?.phone?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      <InputSuggestion />
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
         <Form.Control

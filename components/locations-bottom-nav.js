@@ -1,6 +1,9 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { Container, Row } from 'react-bootstrap'
-export default function NavBarBottom() {
+import LocationList from './location-list'
+
+export default function LocationsBottomNav() {
   const [displayNav, setDisplayNav] = useState(false)
 
   return (
@@ -34,29 +37,14 @@ export default function NavBarBottom() {
         </div>
         {/* <i className="bx bx-chevron-right toggle"></i> */}
       </header>
-      <div className="menu-bar">
-        <div className="menu">
-          <ul className="menu-links">
-            <li className="nav-link">
-              <a href="#">
-                <i className="bx bx-home-alt icon"></i>
-                <span className="text nav-text">Location</span>
-              </a>
-            </li>
-          </ul>
+      <div className="locations-bar">
+        <div className="location">
+          <ul className="location-links">{displayNav && <LocationList />}</ul>
         </div>
         <div className="bottom-content">
           <li className="">
-            <a href="#">
-              <i className="bx bx-log-out icon"></i>
-              <span className="text nav-text">Location List End</span>
-            </a>
-          </li>
-          <li className="mode">
-            <span className="mode-text text">Dark mode</span>
-            <div className="toggle-switch">
-              <span className="switch"></span>
-            </div>
+            <i className="bx bx-log-out icon"></i>
+            <span className="text nav-text">Location List End</span>
           </li>
         </div>
       </div>

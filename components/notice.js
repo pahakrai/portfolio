@@ -1,13 +1,13 @@
 import { Image, Row, Col } from 'react-bootstrap'
 import Card from './card'
-import { H1, P } from './common'
+import { H3, P } from './common'
 
 export default () => {
   return (
     <Card>
       <Row>
         <Col xs={8}>
-          <H1>Australian Charity</H1>
+          <H3>Australian Charity</H3>
           <P>Charity description text</P>
         </Col>
         <Col xs={4}>

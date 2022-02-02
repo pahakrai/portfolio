@@ -1,39 +1,50 @@
+import styled from '@emotion/styled'
 import { Col, Form, Image, Row } from 'react-bootstrap'
 
-export default function SelectCard({ types }) {
+const SelectWrapper = styled.div`
+  border-color: #00000090;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 16px;
+`
+
+export default function SelectCard({
+  type = 'radio',
+  title,
+  caption,
+  checked,
+  onSelect,
+  group,
+  feedback
+}) {
   return (
-    <Form>
-      <div
-        key={'radio'}
-        className="mb-3"
-        style={{
-          borderColor: '#00000090',
-          borderStyle: 'solid',
-          borderWidth: '2px',
-          borderRadius: '5px',
-          height: '100%',
-          width: '100%',
-          padding: '16px'
-        }}
-      >
-        <Form.Check type="radio" id={`check-api-$'radio'`}>
+    <SelectWrapper classname="mb-3" onClick={onSelect}>
+      <Form.Group controlId={group}>
+        <Form.Check type={type} name={group}>
           <Row>
             <Col xs={10}>
               <Row>
-                <Form.Check.Label>{`Custom api $'radio'`}</Form.Check.Label>
+                <Form.Check.Label>{title}</Form.Check.Label>
               </Row>
-              <Form.Text>Hello world </Form.Text>
-              <Form.Control.Feedback type="valid">
-                You did it!
-              </Form.Control.Feedback>
+              {caption && <Form.Text>{caption}</Form.Text>}
             </Col>
             <Col xs={2} className="text-end">
-              <Form.Check.Input type="radio" isValid />
+              <Form.Check.Input
+                type={type}
+                checked={checked}
+                onClick={onSelect}
+                name={group}
+                readOnly
+              />
             </Col>
           </Row>
         </Form.Check>
-      </div>
-    </Form>
+      </Form.Group>
+    </SelectWrapper>
   )
 }
 
