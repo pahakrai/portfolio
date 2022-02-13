@@ -6,12 +6,12 @@ import { logout } from '../hooks/logout'
 import { getCurrentLanguage } from '../lib/intl/persist'
 import { getAccessToken, getRefreshToken, setToken } from '../lib/auth'
 
-// runtime
-const publicRuntimeConfig =
-  (typeof getConfig === 'function' &&
-    getConfig() &&
-    getConfig().publicRuntimeConfig) ||
-  {}
+// // runtime from old configuration
+// const publicRuntimeConfig =
+//   (typeof getConfig === 'function' &&
+//     getConfig() &&
+//     getConfig().publicRuntimeConfig) ||
+//   {}
 
 // replace from process env config
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -89,7 +89,7 @@ const loggerInterceptor = (reqContext = {}) => {
   }
 }
 
-const errorInterceptor = reqContext => {
+const errorInterceptor = (reqContext) => {
   // can add interceptor for logging on error
   return {
     ...reqContext,
@@ -118,25 +118,25 @@ const apiInterceptors = compose(
   errorInterceptor
 )
 
-const request = async options => {
+const request = async (options) => {
   const interceptors = apiInterceptors(options)
 
   // Request interceptor for API calls
   client.interceptors.request.use(
-    async config => {
+    async (config) => {
       config.headers = {
         ...config.headers,
         ...(interceptors?.headers || {})
       }
       return config
     },
-    error => {
+    (error) => {
       Promise.reject(error)
     }
   )
 
-  interceptors?.responseErrorInterceptors?.map(errorInterceptor => {
-    return client.interceptors.response.use(response => {
+  interceptors?.responseErrorInterceptors?.map((errorInterceptor) => {
+    return client.interceptors.response.use((response) => {
       return response
     }, errorInterceptor)
   })

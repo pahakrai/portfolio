@@ -4,7 +4,7 @@ import { registAuthListener } from '../../lib/auth'
 import request from '../../utils/api-utils'
 
 // auth and user network request and query hooks
-export const fetchMapAddress = options => {
+export const fetchMapAddress = (options) => {
   return request({
     url: '/current-user',
     method: 'get',
@@ -19,7 +19,7 @@ export const fetchColors = ({ pageParam = 1 }) => {
   })
 }
 
-export const searchQueryAddress = (onSuccess, onError) => {
+export const useQueryAddress = (onSuccess, onError) => {
   const {
     data,
     isLoading,
@@ -28,8 +28,7 @@ export const searchQueryAddress = (onSuccess, onError) => {
     hasNextPage,
     fetchNextPage,
     error,
-    isError,
-    hasNextPage
+    isError
   } = useInfiniteQuery(['query-address'], fetchColors, {
     getNextPageParam: (_lastPage, pages) => {
       // NOTE: here 4 is total pages which needs to be dynamic

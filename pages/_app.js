@@ -22,17 +22,15 @@ import { IntlProvider } from '../lib/intl/provider'
 import { languageFilter } from '../lib/intl/checkLanguage'
 import { getLanguageFromReq } from '../lib/intl/getLanguageFromReq'
 
-import buildClient, { isServer } from '../utils/build-client'
 import { queryClient } from '../utils/react-query-client'
 
 import Fonts from '../components/fonts'
 import LayoutMain from '../components/layouts/main'
-import RouteGuard from '../components/route-guard'
-import axios from 'axios'
+import ServiceWorker from '../components/scripts/service-worker'
 
 const AppComponent = ({ Component, pageProps, router }) => {
   const [mode, setMode] = useState(THEME_TYPE.LIGHT)
-  const toggleMode = mode => {
+  const toggleMode = (mode) => {
     setMode(mode)
   }
 
@@ -47,6 +45,7 @@ const AppComponent = ({ Component, pageProps, router }) => {
         >
           <IntlProvider locale={pageProps.language}>
             <Fonts />
+            <ServiceWorker />
             <LayoutMain router={router}>
               <AnimatePresence exitBeforeEnter initial={true}>
                 <Component {...pageProps} key={router.route} />
@@ -59,7 +58,7 @@ const AppComponent = ({ Component, pageProps, router }) => {
   )
 }
 
-AppComponent.getInitialProps = async acx => {
+AppComponent.getInitialProps = async (acx) => {
   // NOTE: CHECK WHY buildClient CLIENT HEADERS HAS ISSUES
   // let access_token
   // if (isServer() && acx.ctx.req?.headers?.cookie) {

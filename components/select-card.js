@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Col, Form, Image, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 
 const SelectWrapper = styled.div`
   border-color: #00000090;
@@ -45,13 +45,5 @@ export default function SelectCard({
         </Form.Check>
       </Form.Group>
     </SelectWrapper>
-  )
-}
-
-SelectCard.Image = () => {
-  return (
-    <SelectCard>
-      <Image src="/"></Image>
-    </SelectCard>
   )
 }

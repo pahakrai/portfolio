@@ -4,7 +4,7 @@ import { registAuthListener } from '../../lib/auth'
 import request from '../../utils/api-utils'
 
 // auth and user network request and query hooks
-export const fetchCurrentUser = options => {
+export const fetchCurrentUser = (options) => {
   return request({
     url: '/current-user',
     method: 'get',
@@ -20,11 +20,11 @@ export const fetchCurrentUser = options => {
 //   return useQuery(['user', id], fetchUserById)
 // }
 
-const login = data => {
+const login = (data) => {
   return request({ url: '/login', method: 'post', data })
 }
 
-const signUpUser = data => {
+const signUpUser = (data) => {
   return request({ url: '/signup', method: 'post', data })
 }
 
@@ -32,7 +32,7 @@ export const useUserLogin = (onSuccess, onError) => {
   return useMutation(login, { onSuccess, onError })
 }
 
-export const getCurrentUser = (onSuccess, onError) => {
+export const useCurrentUserMutation = (onSuccess, onError) => {
   return useMutation(fetchCurrentUser, { onSuccess, onError })
 }
 
@@ -50,7 +50,7 @@ export const useCurrentUser = (onSuccess, onError) => {
   )
 
   useEffect(() => {
-    const handler = registAuthListener(authed => {
+    const handler = registAuthListener((authed) => {
       setAuthed(authed)
     })
     return () => {

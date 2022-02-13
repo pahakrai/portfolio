@@ -39,12 +39,12 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -74,7 +74,7 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
         <Form.Label>{intl.formatMessage({ id: 'label_input_one' })}</Form.Label>
         <Form.Control
           {...inputOneProps}
-          onChange={e => {
+          onChange={(e) => {
             // NOTE: override the default behavior of
             // validating on type
             setError('inputOne', null)
@@ -94,7 +94,7 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
         <Form.Label>{intl.formatMessage({ id: 'label_input_two' })}</Form.Label>
         <Form.Control
           {...inputTwoProps}
-          onChange={e => {
+          onChange={(e) => {
             // NOTE: override the default behavior of
             // validating on type
             setError('inputTwo', null)
@@ -115,5 +115,7 @@ const StepOne = forwardRef(({ onChangeValues }, ref) => {
     </Form>
   )
 })
+
+StepOne.displayName = 'StepOne'
 
 export default StepOne

@@ -22,7 +22,7 @@ export const userService = {
 function login(username, password) {
   return fetchWrapper
     .post(`${baseUrl}/authenticate`, { username, password })
-    .then(user => {
+    .then((user) => {
       // publish user with basic auth credentials to subscribers and store in
       // local storage to stay logged in between page refreshes
       user.authdata = window.btoa(username + ':' + password)

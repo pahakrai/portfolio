@@ -61,12 +61,12 @@ const SelectSubscriptionType = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -79,7 +79,7 @@ const SelectSubscriptionType = forwardRef(({ onChangeValues }, ref) => {
     onClickPrev
   }))
 
-  const onSelectSubscriptionType = type => {
+  const onSelectSubscriptionType = (type) => {
     // setSelectedSubscriptionType(type)
     setValue('subscriptionType', type)
   }
@@ -94,7 +94,7 @@ const SelectSubscriptionType = forwardRef(({ onChangeValues }, ref) => {
   useEffect(() => {
     if (binSubscriptionTypeOptions.length && !subscriptionType) {
       const defaultSubscription =
-        binSubscriptionTypeOptions.find(sub => sub.default === true) || 1
+        binSubscriptionTypeOptions.find((sub) => sub.default === true) || 1
       setValue('subscriptionType', defaultSubscription?.type || 1)
     }
   }, [subscriptionType, subscriptionType])
@@ -120,5 +120,7 @@ const SelectSubscriptionType = forwardRef(({ onChangeValues }, ref) => {
     </>
   )
 })
+
+SelectSubscriptionType.displayName = 'SelectSubscriptionType'
 
 export default SelectSubscriptionType

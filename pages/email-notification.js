@@ -7,12 +7,12 @@ import { useRouter } from 'next/router'
 import { withAuthRedirect } from '../helpers/redirect'
 import { H3, P, PageContainer } from '../components/common'
 
-const obscureEmail = email => {
+const obscureEmail = (email) => {
   const [name, domain] = email.split('@')
   return `${name[0]}${new Array(name.length).join('*')}@${domain}`
 }
 
-const EmailNotice = () => {
+const EmailNotification = () => {
   const intl = useIntl()
   const router = useRouter()
 
@@ -39,7 +39,7 @@ const EmailNotice = () => {
           </Link>
         </Col>
       </Row>
-      <Row style={{ gap: '1rem' }} className="justify-content-between">
+      <Row>
         <Col>
           <Button
             variant="primary"
@@ -57,4 +57,4 @@ const EmailNotice = () => {
 
 export default compose(
   withAuthRedirect({ route: '/', redirectIfAuthed: true })
-)(EmailNotice)
+)(EmailNotification)

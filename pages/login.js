@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { setAccessToken } from '../lib/auth'
 import { withAuthRedirect } from '../helpers/redirect'
-import { useUserLogin, getCurrentUser } from '../hooks/api/user'
+import { useUserLogin, useCurrentUserMutation } from '../hooks/api/user'
 
 import SignIn from '../components/sign-in'
 import { PageContainer } from '../components/common'
@@ -44,9 +44,9 @@ const Login = () => {
     // delayError: undefined
   })
 
-  const { mutateAsync: currentUserByToken } = getCurrentUser()
+  const { mutateAsync: currentUserByToken } = useCurrentUserMutation()
 
-  const onLoginSuccess = async res => {
+  const onLoginSuccess = async (res) => {
     const user = await currentUserByToken({
       headers: { Authorization: `Bearer ${res.data.token}` }
     })
@@ -64,7 +64,7 @@ const Login = () => {
     loading
   } = useUserLogin(onLoginSuccess, onLoginError)
 
-  const onClickSubmit = values => {
+  const onClickSubmit = (values) => {
     const { email, password } = values
     login({ email, password })
   }

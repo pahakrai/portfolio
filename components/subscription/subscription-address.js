@@ -70,12 +70,12 @@ const SelectAddress = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -88,7 +88,7 @@ const SelectAddress = forwardRef(({ onChangeValues }, ref) => {
     onClickPrev
   }))
 
-  const onSelectAddress = addressId => {
+  const onSelectAddress = (addressId) => {
     setValue('address', addressId)
   }
 
@@ -102,7 +102,7 @@ const SelectAddress = forwardRef(({ onChangeValues }, ref) => {
   useEffect(() => {
     if (userAddresses.length && !watchAddress) {
       const defaultAddress =
-        userAddresses.find(address => address.default === true) || 1
+        userAddresses.find((address) => address.default === true) || 1
       setValue('address', defaultAddress?.id || 1)
     }
   }, [userAddresses, watchAddress])
@@ -172,5 +172,7 @@ const SelectAddress = forwardRef(({ onChangeValues }, ref) => {
     </>
   )
 })
+
+SelectAddress.displayName = 'SelectAddress'
 
 export default SelectAddress

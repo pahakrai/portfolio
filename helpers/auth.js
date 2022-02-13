@@ -12,7 +12,7 @@ import { redirectUrl } from './redirect'
 
 // Functions down below could be placed in diffrent files
 // And used for any pages where they could be needed
-async function auth(ctx, pageProps, next) {
+const auth = (options) => async (ctx, pageProps, next) => {
   // NOTE: CAN USE SESSION FOR THE SAME PURPOSE AS
   // FETCHING USER FROM REQUEST CONTEXT
   // const currentSession = await session(ctx)
@@ -25,7 +25,7 @@ async function auth(ctx, pageProps, next) {
   } else {
     access_token = getAccessToken()
   }
-  const isLoggedIn = false
+  let isLoggedIn = false
   let currentUserData
   try {
     const response = await axios.get(
@@ -47,7 +47,7 @@ async function auth(ctx, pageProps, next) {
 
   if (!isLoggedIn) {
     pageProps.redirect = {
-      destination: '/login-info',
+      destination: _route,
       permanent: false
     }
     // Stop middlewares chain execution
@@ -59,3 +59,5 @@ async function auth(ctx, pageProps, next) {
   pageProps.props.user = currentUserData
   return next()
 }
+
+export default auth

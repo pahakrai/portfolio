@@ -26,7 +26,7 @@ const SignIn = ({ onClickSubmit }) => {
         <Form.Label>{intl.formatMessage({ id: 'label_email' })}</Form.Label>
         <Form.Control
           {...emailInputProps}
-          onChange={e => {
+          onChange={(e) => {
             // NOTE: override the default behavior of
             // validating on type
             setError('email', null)
@@ -46,7 +46,7 @@ const SignIn = ({ onClickSubmit }) => {
         <Form.Label>{intl.formatMessage({ id: 'label_password' })}</Form.Label>
         <Form.Control
           {...passwordInputProps}
-          onChange={e => {
+          onChange={(e) => {
             // NOTE: override the default behavior of
             // validating on type
             setError('password', null)

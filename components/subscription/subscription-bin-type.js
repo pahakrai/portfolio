@@ -59,12 +59,12 @@ const SelectBinType = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -77,7 +77,7 @@ const SelectBinType = forwardRef(({ onChangeValues }, ref) => {
     onClickPrev
   }))
 
-  const onSelectBinType = binTypeId => {
+  const onSelectBinType = (binTypeId) => {
     setValue('binType', binTypeId)
   }
 
@@ -91,7 +91,7 @@ const SelectBinType = forwardRef(({ onChangeValues }, ref) => {
   useEffect(() => {
     if (binTypes.length && !watchBinType) {
       const defaultBinType =
-        binTypes.find(binType => binType.default === true) || '200 litre drum'
+        binTypes.find((binType) => binType.default === true) || '200 litre drum'
       setValue('binType', defaultBinType?.type || '200 litre drum')
     }
   }, [binTypes, watchBinType])
@@ -122,5 +122,7 @@ const SelectBinType = forwardRef(({ onChangeValues }, ref) => {
     </>
   )
 })
+
+SelectBinType.displayName = 'SelectBinType'
 
 export default SelectBinType

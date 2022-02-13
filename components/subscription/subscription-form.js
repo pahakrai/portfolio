@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProgressBar } from 'react-bootstrap'
 import { H3 } from '../common'
 
@@ -18,13 +18,13 @@ const Progress = styled(ProgressBar)`
 export const stepData = [
   {
     fieldCount: 1,
-    stepComponent: <SelectAddress />,
+    stepComponent: SelectAddress,
     step: 1,
     title: 'Location'
   },
   {
     fieldCount: 1,
-    stepComponent: <SelectSubscriptionType />,
+    stepComponent: SelectSubscriptionType,
     step: 2,
     title: 'Subscription',
     forwardTo: {
@@ -34,7 +34,7 @@ export const stepData = [
   },
   {
     fieldCount: 1,
-    stepComponent: <SelectBinType />,
+    stepComponent: SelectBinType,
     step: 3,
     title: 'Subscription',
     forwardTo: {
@@ -43,7 +43,7 @@ export const stepData = [
   },
   {
     fieldCount: 1,
-    stepComponent: <SelectCharity />,
+    stepComponent: SelectCharity,
     step: 4,
     title: 'Payment',
     forwardTo: {
@@ -52,13 +52,13 @@ export const stepData = [
   },
   {
     fieldCount: 1,
-    stepComponent: <SelectPayment />,
+    stepComponent: SelectPayment,
     step: 5,
     title: 'Payment',
     end: true
   }
 
-  // { fieldCount: 1, stepComponent: <StepOne />, step: 5 }
+  // { fieldCount: 1, stepComponent: StepOne, step: 5 }
 ]
 
 const Subscription = () => {
@@ -73,26 +73,28 @@ const Subscription = () => {
     updateProgress(1)
   }, [])
 
-  const updateProgress = stepNo => {
+  const updateProgress = (stepNo) => {
     const totalStepValidCount =
       stepData
-        .filter(s => s.step <= stepNo)
+        .filter((s) => s.step <= stepNo)
         .reduce((count, step) => count + step.fieldCount, 0) || 0
     const prog = (totalStepValidCount / totalFieldCount) * 100 // change to percentage
     setProgress(prog)
   }
 
-  const onSelectStep = stepNo => {
+  const onSelectStep = (stepNo) => {
     setStep(stepNo)
     updateProgress(stepNo)
   }
 
   return (
     <>
-      <H3>{stepData.find(data => data.step === step).title}</H3>
+      <H3>{stepData.find((data) => data.step === step).title}</H3>
       <Progress now={progress} style={{ marginBottom: '16px' }} />
       <SubscriptionForm onSelectStep={onSelectStep} step={step}>
-        {stepData.map((step, idx) => step.stepComponent)}
+        {stepData.map((step, idx) =>
+          React.createElement(step.stepComponent, { key: idx })
+        )}
       </SubscriptionForm>
     </>
   )

@@ -7,7 +7,37 @@ export default function LocationsBottomNav() {
   const [displayNav, setDisplayNav] = useState(false)
 
   return (
-    <Container className={displayNav ? 'bottombar' : 'bottombar close'}>
+    <Container
+      className={displayNav ? 'bottombar' : 'bottombar close'}
+      style={{
+        paddingLeft: 0,
+        paddingRight: 0
+      }}
+      // onPan={(e, pointInfo) => {
+      //   if (pointInfo.point.x < width) x.set(pointInfo.point.x - width)
+      //   // if (pointInfo.velocity.x < 0) x.set(pointInfo.point.x - width)
+
+      //   // console.log("pointInfo.delta.x: ", pointInfo.delta.x)
+      //   // console.log("pointInfo.offset.x: ", pointInfo.offset.x)
+      //   // console.log("pointInfo.point.x: ", pointInfo.point.x)
+      //   // console.log("pointInfo.velocity.x: ", pointInfo.velocity.x)
+      // }}
+      // onPanEnd={(e, pointInfo) => {
+      //   if (Math.abs(pointInfo.velocity.x) > 1000 && !isOpen) {
+      //     if (pointInfo.velocity.x > 0) {
+      //       x.set(0)
+      //     } else x.set(-width)
+      //   } else {
+      //     if (Math.abs(x.current) < width / 2) {
+      //       x.set(0)
+      //       // setOpen(true)
+      //     } else {
+      //       x.set(-width)
+      //       // setOpen(false)
+      //     }
+      //   }
+      // }}
+    >
       <div
         style={{
           alignSelf: 'center',
@@ -28,7 +58,7 @@ export default function LocationsBottomNav() {
       <header>
         <div className="image-text">
           <span className="image">
-            <img src="logo.png" alt="" />
+            <img src="/images/pahak.png" alt="" />
           </span>
           <div className="text logo-text">
             <span className="name">Finishes 5 pm</span>
@@ -39,7 +69,7 @@ export default function LocationsBottomNav() {
       </header>
       <div className="locations-bar">
         <div className="location">
-          <ul className="location-links">{displayNav && <LocationList />}</ul>
+          <ul>{displayNav && <LocationList />}</ul>
         </div>
         <div className="bottom-content">
           <li className="">

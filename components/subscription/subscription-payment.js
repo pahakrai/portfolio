@@ -14,7 +14,10 @@ import { H3, P } from '../common'
 
 import { StripePayment } from '../stripe/stripe-payment'
 
-const PaymentMethod = { CREDIT_CARD_STRIPE: 'stripe', PUBLIC_KEY: 'keyfromenv' }
+const PaymentMethod = {
+  CREDIT_CARD_STRIPE: 'stripe',
+  PUBLIC_KEY: 'keyfromenv'
+}
 
 const paymentOptions = []
 
@@ -69,12 +72,12 @@ const SelectPayment = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -87,7 +90,7 @@ const SelectPayment = forwardRef(({ onChangeValues }, ref) => {
     onClickPrev
   }))
 
-  const onSelectPayment = paymentId => {
+  const onSelectPayment = (paymentId) => {
     setValue('payment', paymentId)
   }
 
@@ -102,7 +105,7 @@ const SelectPayment = forwardRef(({ onChangeValues }, ref) => {
     //create a hook here
   }
 
-  const handleStripeCheckout = source => {
+  const handleStripeCheckout = (source) => {
     // checkout by stripe
     if (getValues() && source) {
       checkout({
@@ -118,7 +121,7 @@ const SelectPayment = forwardRef(({ onChangeValues }, ref) => {
   useEffect(() => {
     if (paymentOptions.length && !watchPayment) {
       const defaultPayment =
-        paymentOptions.find(payment => payment.default === true) || 1
+        paymentOptions.find((payment) => payment.default === true) || 1
       setValue('payment', defaultPayment?.id || 1)
     }
   }, [paymentOptions, watchPayment])
@@ -139,5 +142,7 @@ const SelectPayment = forwardRef(({ onChangeValues }, ref) => {
     </>
   )
 })
+
+SelectPayment.displayName = 'SelectPayment'
 
 export default SelectPayment

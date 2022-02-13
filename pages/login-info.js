@@ -14,7 +14,7 @@ const LoginInfo = ({ currentUser }) => {
   const router = useRouter()
   return (
     <PageContainer>
-      <Image src={'/images/pahak.png'} fluid width={400} height={400} />
+      <Image src={'/images/pahak.png'} width={400} height={400} />
       <Row>
         <H3>Enter Your Details</H3>
         <P style={{ textAlign: 'center' }}>
@@ -22,7 +22,7 @@ const LoginInfo = ({ currentUser }) => {
         </P>
       </Row>
       <Row>
-        <H3>We'll take care of the rest</H3>
+        <H3>We&apos;ll take care of the rest</H3>
         <P style={{ textAlign: 'center' }}>
           Prompt and accurate payment QR Code on each bin for payment security
         </P>

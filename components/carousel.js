@@ -5,6 +5,7 @@ import SwiperCore, { Pagination } from 'swiper'
 import '../styles/Home.module.css'
 import { P } from './common'
 import TaskFrame from './task-frame'
+import Image from 'next/image'
 
 SwiperCore.use([Pagination])
 
@@ -56,9 +57,10 @@ export default function Carousel() {
               width: '33.3%',
               marginLeft: '16px'
             }}
+            key={idx}
           >
             <TaskFrame className="text-center justify-content-center">
-              <img
+              <Image
                 style={{
                   objectFit: 'cover'
                 }}

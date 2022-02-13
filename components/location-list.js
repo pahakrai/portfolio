@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Col, Row } from 'react-bootstrap'
+import Card from './card'
 
 const deliveryLocations = [
   {
@@ -26,6 +28,8 @@ const deliveryLocations = [
 
 export default function LocationList() {
   const hasRendered = useRef(false)
+  const [selectedAddress, setSelectedAddress] = useState(1)
+
   useEffect(() => {
     if (deliveryLocations.length) {
       hasRendered.current = true
@@ -39,11 +43,11 @@ export default function LocationList() {
       {deliveryLocations.map((location, i) => (
         <motion.li
           variants={{
-            hidden: i => ({
+            hidden: (i) => ({
               opaciity: 0,
               y: -50 * i
             }),
-            visible: i => ({
+            visible: (i) => ({
               opacity: 1,
               transition: { delay: i * 0.05 },
               y: 0
@@ -52,17 +56,27 @@ export default function LocationList() {
               opacity: 0
             }
           }}
-          className="nav-link"
           initial={hasRendered.current ? 'visible' : 'hidden'}
           animate="visible"
           exit="removed"
           custom={i}
           key={location.id}
+          onClick={() => setSelectedAddress(location.id)}
+          className={selectedAddress ? 'step step-active' : 'step'}
+          style={{
+            backgroundColor:
+              selectedAddress === location.id ? '#D3D3D3' : 'transparent'
+          }}
         >
-          <a href="#">
-            <i className="bx bx-home-alt icon"></i>
-            <span className="text nav-text">{location.address}</span>
-          </a>
+          <div style={{ height: 'inherit' }}>
+            <div className="circle">
+              {i === 0 ? <i className="fa fa-check"></i> : i}
+            </div>
+          </div>
+          <div>
+            <div className="title">Steps</div>
+            <div className="caption">{location.address}</div>
+          </div>
         </motion.li>
       ))}
     </AnimatePresence>

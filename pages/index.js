@@ -13,6 +13,8 @@ import { H3, P, Spacer } from '../components/common'
 import { PageContainer } from '../components/common'
 import LocationsBottomNav from '../components/locations-bottom-nav'
 import Card from '../components/card'
+import serverSidePropsCompose from '../lib/serverSidePropsCompose'
+import auth from '../helpers/auth'
 
 const HomeSection = styled.div`
   border-top-left-radius: 16px;
@@ -50,4 +52,7 @@ const Home = ({ currentUser }) => {
   )
 }
 
+// export const getServerSideProps = serverSidePropsCompose(auth({}))
+
 export default compose(withAuthRedirect({}))(Home)
+// export default Home

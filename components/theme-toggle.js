@@ -26,7 +26,7 @@ function ThemeToggle() {
             name="radio"
             value={radio.value}
             checked={radioValue === radio.value}
-            onChange={e => {
+            onChange={(e) => {
               setRadioValue(e.currentTarget.value)
               toggleTheme(e.currentTarget.value)
             }}

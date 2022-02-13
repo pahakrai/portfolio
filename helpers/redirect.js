@@ -13,7 +13,7 @@ import {
 // TODO: test and use react query for fetching currenct user preload
 import { isServer } from '../utils/build-client'
 
-export const redirectUrl = ctx => {
+export const redirectUrl = (ctx) => {
   // create and format redirect url
   const url = {
     pathname: ctx.pathname,
@@ -30,8 +30,8 @@ export const redirectUrl = ctx => {
 //   redirectIfAuthed?: boolean;
 // }
 
-export const withAuthRedirect = options => Page => {
-  return class extends React.Component {
+export const withAuthRedirect = (options) => (Page) => {
+  return class AuthRedirect extends React.Component {
     static async getInitialProps(ctx) {
       const _route = options?.route
         ? options.route

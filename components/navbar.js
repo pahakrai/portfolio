@@ -15,6 +15,7 @@ import ThemeToggleButton from './theme-toggle-button'
 import Logo from './logo'
 import Menubar from './menu-sidebar'
 import { H1 } from './common'
+import { askForNotificationPermission } from '../helpers/notification'
 
 // NOTE: with styled-components
 // const NavLogoWrapper = styled.div.attrs(() => ({
@@ -45,12 +46,12 @@ const MenuButton = styled.button`
     transition: all 0.3s ease;
   }
   &::before {
-    top: ${props => (props.clicked ? '1.5' : '1rem')};
-    transform: ${props => (props.clicked ? 'rotate(135deg)' : 'rotate(0)')};
+    top: ${(props) => (props.clicked ? '1.5' : '1rem')};
+    transform: ${(props) => (props.clicked ? 'rotate(135deg)' : 'rotate(0)')};
   }
   &::after {
-    top: ${props => (props.clicked ? '1.2' : '1.5rem')};
-    transform: ${props => (props.clicked ? 'rotate(-135deg)' : 'rotate(0)')};
+    top: ${(props) => (props.clicked ? '1.2' : '1.5rem')};
+    transform: ${(props) => (props.clicked ? 'rotate(-135deg)' : 'rotate(0)')};
   }
 `
 
@@ -92,7 +93,7 @@ const NavbarWrapper = styled(Navbar)`
 `
 
 // TODO: MOVE SOMEwHERE AS A UTIL WHICH CAN USE SITEMAP
-export const prepareNavLinks = currentUser => {
+export const useNavLinks = (currentUser) => {
   const intl = useIntl()
   return [
     {
@@ -117,17 +118,17 @@ export const prepareNavLinks = currentUser => {
   ]
 }
 
-const NavBar = props => {
+const NavBar = (props) => {
   // from react-query hooks
   const { currentUser } = useCurrentUser()
   const router = useRouter()
   const [clicked, setClicked] = useState(false)
-  const navLinks = prepareNavLinks(currentUser)
+  const navLinks = useNavLinks(currentUser)
 
   // NOTE: JUST IN CASE OF DIFFERENT NAV BACKGROUND ON SCREENS AFTER LOGIN
   const emptyNavPaths = ['/login', '/']
   const shouldBeEmpty = false || emptyNavPaths.includes(router.pathname)
-  const handleClick = boolVal => {
+  const handleClick = (boolVal) => {
     if (boolVal || boolVal === false) {
       setClicked(boolVal)
     } else {
@@ -150,7 +151,7 @@ const NavBar = props => {
             <Nav className="me-auto">
               {navLinks
                 .sort((nav, navNext) => nav.priority - navNext.priority)
-                .map(navObj => (
+                .map((navObj) => (
                   <NavBarLinkItem
                     href={navObj.link}
                     path={router.pathname}
@@ -177,6 +178,12 @@ const NavBar = props => {
                   Logout
                 </Button>
               )}
+              <Button
+                variant="outline-success"
+                onClick={askForNotificationPermission}
+              >
+                Enable Notifications
+              </Button>
             </div>
           </div>
         </Container>

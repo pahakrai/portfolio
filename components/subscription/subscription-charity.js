@@ -63,12 +63,12 @@ const SelectCharity = forwardRef(({ onChangeValues }, ref) => {
     )
   }
 
-  const onClickNext = onValidate => {
+  const onClickNext = (onValidate) => {
     const validated = validateFields()
     if (validated) onValidate()
   }
 
-  const onClickPrev = cb => {
+  const onClickPrev = (cb) => {
     cb()
   }
 
@@ -81,7 +81,7 @@ const SelectCharity = forwardRef(({ onChangeValues }, ref) => {
     onClickPrev
   }))
 
-  const onSelectCharity = charityId => {
+  const onSelectCharity = (charityId) => {
     setValue('charity', charityId)
   }
 
@@ -95,7 +95,7 @@ const SelectCharity = forwardRef(({ onChangeValues }, ref) => {
   useEffect(() => {
     if (charityOptions.length && !watchCharity) {
       const defaultCharity =
-        charityOptions.find(charity => charity.default === true) || 1
+        charityOptions.find((charity) => charity.default === true) || 1
       setValue('charity', defaultCharity?.id || 1)
     }
   }, [charityOptions, watchCharity])
@@ -134,5 +134,7 @@ const SelectCharity = forwardRef(({ onChangeValues }, ref) => {
     </>
   )
 })
+
+SelectCharity.displayName = 'SelectCharity'
 
 export default SelectCharity

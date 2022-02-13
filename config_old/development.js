@@ -1,7 +1,7 @@
-var common = require('./common')
+const common = require('./common')
 
-var public = {
-  ...common.public,
+const publicConfig = {
+  ...common.publicConfig,
   API_BASE_URL: 'http://localhost:3000/api',
   APP_ID: '',
   APP_LOGO: '',
@@ -9,12 +9,12 @@ var public = {
   APP_PACKAGE_NAME: '',
   WEB_URL: 'http://localhost:3000'
 }
-var server = {
+const serverConfig = {
   API_BASE_URL: 'http://localhost:3000/api',
   PORT: 3000,
   DEV: true
 }
 module.exports = {
-  public,
-  server
+  publicConfig,
+  serverConfig
 }

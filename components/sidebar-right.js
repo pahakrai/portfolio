@@ -30,7 +30,7 @@ const SideBar = forwardRef(({ children }, ref) => {
       <header>
         <div className="image-text">
           <span className="image">
-            <img src="logo.png" alt="" />
+            <img src="/images/pahak.png" alt="" />
           </span>
           <div className="text logo-text">
             <span className="name">Finishes 5 pm</span>
@@ -61,5 +61,7 @@ const SideBar = forwardRef(({ children }, ref) => {
     </div>
   )
 })
+
+SideBar.displayName = 'SideBar'
 
 export default SideBar

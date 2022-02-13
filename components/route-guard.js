@@ -28,7 +28,7 @@ const RouteGuard = ({ children }) => {
     }
   }, [])
 
-  const authCheck = url => {
+  const authCheck = (url) => {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = ['/login', '/signup']
     const path = url.split('?')[0]

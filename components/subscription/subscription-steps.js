@@ -41,7 +41,7 @@ const SubscriptionForm = ({ children, onSelectStep = () => false, step }) => {
   const onClickNextCb = () => {
     pageStack.current?.push(step)
     let nextStep = step + 1
-    const forwardTo = stepData.find(data => data.step === step).forwardTo
+    const forwardTo = stepData.find((data) => data.step === step).forwardTo
     if (forwardTo?.step && !forwardTo?.condition) {
       nextStep = forwardTo?.step
     }
@@ -68,7 +68,7 @@ const SubscriptionForm = ({ children, onSelectStep = () => false, step }) => {
     let display = ''
     let action = () => false
 
-    if (stepData.find(data => data.step === step).end === true) {
+    if (stepData.find((data) => data.step === step).end === true) {
       display = 'Place Order'
       action = () => {
         formRef.current?.onClickSubmit()
@@ -83,7 +83,7 @@ const SubscriptionForm = ({ children, onSelectStep = () => false, step }) => {
   }
 
   return (
-    <div key={step}>
+    <>
       <FormProvider {...methods}>
         {child &&
           React.cloneElement(child, {
@@ -115,7 +115,7 @@ const SubscriptionForm = ({ children, onSelectStep = () => false, step }) => {
           </Button>
         </Col>
       </Row>
-    </div>
+    </>
   )
 }
 

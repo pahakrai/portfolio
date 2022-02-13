@@ -3,7 +3,7 @@ import isPropValid from '@emotion/is-prop-valid'
 import styled from '@emotion/styled'
 
 const StyledDiv = styled(motion.div, {
-  shouldForwardProp: prop => {
+  shouldForwardProp: (prop) => {
     return isPropValid(prop) || prop === 'transition'
   }
 })

@@ -1,6 +1,6 @@
 var common = require('./common')
 
-var public = {
+var publicConfig = {
   ...common.public,
   API_BASE_URL: 'http://localhost:3000/api',
   APP_ID: '',
@@ -9,12 +9,12 @@ var public = {
   APP_PACKAGE_NAME: '',
   WEB_URL: 'http://localhost:3000'
 }
-var server = {
+var serverConfig = {
   API_BASE_URL: 'http://localhost:3000/api',
   PORT: 3000,
   DEV: true
 }
 module.exports = {
-  public,
-  server
+  publicConfig,
+  serverConfig
 }

@@ -44,7 +44,7 @@ export const StripeElements = ({ onPrepared }) => {
     handleSubmit
   } = methods
 
-  const _handleCardNumberChange = event => {
+  const _handleCardNumberChange = (event) => {
     if (event.error || !event.complete) {
       setValue('creditCardNumber', undefined)
       setError('creditCardNumber', { type: 'validate' })
@@ -54,7 +54,7 @@ export const StripeElements = ({ onPrepared }) => {
     }
   }
 
-  const _handleCardExpiryChange = event => {
+  const _handleCardExpiryChange = (event) => {
     if (event.error || !event.complete) {
       setValue('creditCardExpiry', undefined)
       setError('creditCardExpiry', { type: 'validate' })
@@ -64,7 +64,7 @@ export const StripeElements = ({ onPrepared }) => {
     }
   }
 
-  const _handleCardCVVChange = event => {
+  const _handleCardCVVChange = (event) => {
     if (event.error || !event.complete) {
       setValue('creditCardCVV', undefined)
       setError('creditCardCVV', { type: 'validate' })
@@ -74,7 +74,7 @@ export const StripeElements = ({ onPrepared }) => {
     }
   }
 
-  const _handleSubmit = async data => {
+  const _handleSubmit = async (data) => {
     // display payment modal
     setLoading(true)
     const source = await stripe.createSource(
@@ -124,7 +124,7 @@ export const StripeElements = ({ onPrepared }) => {
           </Form.Label>
           <CardNumberElement
             {...ccNumberProps}
-            onChange={e => {
+            onChange={(e) => {
               // NOTE: override the default behavior of
               // validating on type
               setError('creditCardNumber', null)
@@ -143,7 +143,7 @@ export const StripeElements = ({ onPrepared }) => {
           </Form.Label>
           <CardExpiryElement
             {...ccExpiryProps}
-            onChange={e => {
+            onChange={(e) => {
               // NOTE: override the default behavior of
               // validating on type
               setError('creditCardExpiry', null)
@@ -160,7 +160,7 @@ export const StripeElements = ({ onPrepared }) => {
           <Form.Label>{intl.formatMessage({ id: 'label_cvv' })}</Form.Label>
           <CardCvcElement
             {...ccCVVProps}
-            onChange={e => {
+            onChange={(e) => {
               // NOTE: override the default behavior of
               // validating on type
               setError('creditCardCVV', null)

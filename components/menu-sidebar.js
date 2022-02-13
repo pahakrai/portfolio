@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { debounce } from 'lodash'
-import { prepareNavLinks } from './navbar'
+import { useNavLinks } from './navbar'
 import { useCurrentUser } from '../hooks/api/user'
 
 const Container = styled.div`
@@ -22,7 +22,7 @@ const Container = styled.div`
 
 const SidebarContainer = styled.div`
   background-color: black;
-  width: ${props => (props.clicked ? '12rem' : 0)};
+  width: ${(props) => (props.clicked ? '12rem' : 0)};
   height: 100vh;
   border-radius: 0 16px 16px 0;
   display: flex;
@@ -55,7 +55,7 @@ const SlickBar = styled.ul`
   position: absolute;
   left: 0;
 
-  width: ${props => (props.clicked ? '12rem' : 0)};
+  width: ${(props) => (props.clicked ? '12rem' : 0)};
   height: 100vh;
   transition: all 0.5s ease;
   border-radius: 0 16px 16px 0;
@@ -89,14 +89,14 @@ const Item = styled.a`
 `
 
 const Text = styled.span`
-  width: ${props => (props.clicked ? '100%' : '0')};
+  width: ${(props) => (props.clicked ? '100%' : '0')};
   overflow: hidden;
-  margin-left: ${props => (props.clicked ? '1.5rem' : '0')};
+  margin-left: ${(props) => (props.clicked ? '1.5rem' : '0')};
   transition: all 0.3s ease;
 `
 
 const Profile = styled.div`
-  width: ${props => (props.clicked ? '14rem' : '3rem')};
+  width: ${(props) => (props.clicked ? '14rem' : '3rem')};
   height: 3rem;
 
   padding: 0.5rem 1rem;
@@ -106,7 +106,7 @@ const Profile = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: ${props => (props.clicked ? '9rem' : '0')};
+  margin-left: ${(props) => (props.clicked ? '9rem' : '0')};
 
   background-color: black;
   color: white;
@@ -127,7 +127,7 @@ const Profile = styled.div`
 `
 
 const Details = styled.div`
-  display: ${props => (props.clicked ? 'flex' : 'none')};
+  display: ${(props) => (props.clicked ? 'flex' : 'none')};
   justify-content: space-between;
   align-items: center;
 `
@@ -185,26 +185,25 @@ const Menubar = ({ clicked, setClicked }) => {
       setClicked(false)
     }, 0)
     window.addEventListener('resize', debouncedHandleResize)
-    return _ => {
+    return (_) => {
       window.removeEventListener('resize', debouncedHandleResize)
     }
   })
 
-  const links = prepareNavLinks(currentUser)
+  const links = useNavLinks(currentUser)
 
   return (
     <Container>
       <SidebarContainer>
         <SlickBar clicked={clicked}>
-          {links.map(link => (
-            <NextLink href={link.link}>
+          {links.map((link, idx) => (
+            <NextLink href={link.link} key={idx}>
               <Item onClick={() => setClicked(false)}>
                 <Image
                   src={'/images/pahak.png'}
                   alt="Home"
                   width={60}
                   height={60}
-                  roundedCircle
                 />
                 <Text clicked={clicked}>{link.display_text}</Text>
               </Item>
@@ -218,7 +217,6 @@ const Menubar = ({ clicked, setClicked }) => {
             alt="Profile"
             width={60}
             height={60}
-            roundedCircle
           />
           <Details clicked={profileClick}>
             <Name>
@@ -231,7 +229,6 @@ const Menubar = ({ clicked, setClicked }) => {
                 alt="logout"
                 width={60}
                 height={60}
-                roundedCircle
               />
             </Logout>
           </Details>

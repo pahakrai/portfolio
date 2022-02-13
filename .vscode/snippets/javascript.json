@@ -11,8 +11,6 @@
     "prefix": "tlog",
     "body": "console.tron.log(\"$1\");$0"
   },
-
-  /* IMPORTS */
   "Import File": {
     "prefix": "im",
     "body": "import ${1} from \"${2}${1}\";$0"
@@ -47,13 +45,11 @@
     ]
   },
 
-  /* COMPONENT METHODS */
   "Set State": {
     "prefix": "sst",
     "body": ["this.setState({", "  ${1}: $2", "});$0"]
   },
 
-  /* LIFECYCLE METHODS */
   "constructor": {
     "prefix": "cstt",
     "body": ["constructor (props) {", "  super(props);", "  $0", "}"]

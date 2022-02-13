@@ -6,7 +6,10 @@ const StripeInput = ({ component: Component, inputRef, ...props }) => {
     focus: () => elementRef?.current?.focus
   }))
   return (
-    <Component onReady={element => (elementRef.current = element)} {...props} />
+    <Component
+      onReady={(element) => (elementRef.current = element)}
+      {...props}
+    />
   )
 }
 

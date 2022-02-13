@@ -1,8 +1,9 @@
-import { Image, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
+import Image from 'next/image'
 import Card from './card'
 import { H3, P } from './common'
 
-export default () => {
+const Notice = () => {
   return (
     <Card>
       <Row>
@@ -11,16 +12,11 @@ export default () => {
           <P>Charity description text</P>
         </Col>
         <Col xs={4}>
-          <Image
-            src={'/images/pahak.png'}
-            fluid
-            roundedCircle
-            width={60}
-            height={60}
-            alt="logo"
-          />
+          <Image src={'/images/pahak.png'} width={60} height={60} alt="logo" />
         </Col>
       </Row>
     </Card>
   )
 }
+
+export default Notice

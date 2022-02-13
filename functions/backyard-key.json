@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "backyard-notifications",
+  "private_key_id": "dcbb0d58f81834c2d3ce82455a9c6ab03e1bb946",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy8BoEWGCLaFQx\n35DKa0STLqRhzpe74bzE7dsiam/p+l/cRW1j50HiGMbUrLT3w+I/VeK2+wv0JXxe\nJNqkf5Cw8Lgkh/xvVSadP7Go1cIj8PaoTyNAZ8JN3otEAMyP5B2U/qjyK8USXhhv\n1Zs2EbfzuY+v5EPXccNa5wnk31uoeuMvNba5v9P4d+PCj6kLBtiOC27Q+rbhfbFM\nkP3Y0WHRbb1nPKJlQSINXW87zGY7KvCOSAiOb+plnvXIpZBMCE5xWcqtoLPJhz+F\nRDd8m5ZXh+79FpNO1AX7ERDGsPoSK1AdSdjtOuppWzm8Pr2yLS2U3WkGyi8X8b/V\nJgJ2uIGNAgMBAAECggEAA02/jTj8f1Zrx4fzKmmUmIsR6eRglM10KMajdx0z98Px\npSV7AY8xfjUq5p5RsQli0fyJ9Qrpi5Ztl2diygq45ytqmvIPzRZrYhfc9dsMfJFk\nXHMpmXTQ95MWSykgnb9+dFPHVsFMICywktAEz5jAJrXUW1EBl6a4DqOZYSpmjNPA\nA5YwOAV13i2H7Jz0urYsfTAFy6etRteK+0RIaTHgLZuW1jLihD5/YyCk8Qe34Z6N\n2V6icbzld2cC/DAg1UPSADkPE5XFv9x80ec7l5wuNPVaTpRr4NB4c7tn61mny8IB\nV0JGPNRCUXDGTfmvxryfAVTkFGoHYISF2qXpxykfgQKBgQD5ArBOYk68cUQ93G1W\nSPVpNCwBKe19SoMPsNwKdrI8NDDlwDoHbXyf/uX9d1TYE/u+Zf7grxEPobbD47Qp\nSjOEyIT+5HV7KyWFiCmcvV/o1nBCy8mFdhxbpAd9kL0TMGonRyGW+nt1f+4rO+uv\nlvpCoYjrqcRRq3QdxwqTg16VfQKBgQC39eSnxK4MLgvZ6i3jHot38vD+AvwaKueg\nlzU7ASlvWZWbnH2Wf2GSNxTWizQVRmeWCN78oieXbDc9fQm6foT4MiCvuOjtzOCG\nSGlqVKZZDvANh3exw3yUt4shOdnZCtdaf+sCPmKL0zEGTYynnd1/e5pus1ITDAkw\n1C+nbJoZUQKBgHjVPyyqM77pz82c+0mVmdD1Si0+ZUoZMEQa9Iv3UUI5qUiz4PTd\nwk35aS14DKnV+KFJ6UaqbUMCnCeuhSxMH3fdvfvabM/Z/hkwG9E9bB8Wf99J+H5U\n9CncDO53n+iB4+EveTNEVUiNTcuZBiNsxgAzVrfU57kh0/TnM1ClvO4ZAoGAPOlK\nYNKa3qWQfwMvVniSrZDfgvvyBagXMfFfSr5Dvf7nrrLOUrqyz/s1ByTohfLd8avW\nSchXW6gVUmLIidvCo3vVntmXJsYjwdLQNMj6m5p6mcA1PcMAyS1NAB9rppYUYH7i\njceiUbIIFZIv9IAtCz0eEXGGx4/Aq05WyRUIoUECgYEAsheKBuaidGGXiLDy0fkx\n6OAVu5kfd8ni0+Zf+FaRY+VY4fsS4FP5J0NBm6flH0iT7XfcpvUj/TmJy8UQaJFu\nHttTPKkopsOgC4pxHDLYvys4RfRqDJPmyht708XUrvJqL1igqCA/SDlBm40kg61A\nDKkkFRuxC84QvkUoQXxbqfE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-pwxfi@backyard-notifications.iam.gserviceaccount.com",
+  "client_id": "114088146091572655839",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-pwxfi%40backyard-notifications.iam.gserviceaccount.com"
+}

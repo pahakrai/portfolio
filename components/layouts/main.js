@@ -10,10 +10,10 @@ const ContainerFull = styled(Container)`
 `
 
 const MainContainer = styled.main`
-  background-color: ${props => props.theme.colors.themeColor1};
+  background-color: ${(props) => props.theme.colors.themeColor1};
 `
 
-const LayoutMain = props => {
+const LayoutMain = (props) => {
   return (
     <MainContainer>
       <Head>
