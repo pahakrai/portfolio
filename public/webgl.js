@@ -1,303 +1,191 @@
-// import './style.css'
-// import * as THREE from 'three'
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-// import { gsap } from 'gsap'
+import gsap from 'https://cdn.skypack.dev/gsap'
+import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js'
+import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js'
+import * as dat from 'https://cdn.skypack.dev/dat.gui'
 
-// /**
-//  * Loaders
-//  */
-// const loadingBarElement = document.querySelector('.loading-bar')
+const gui = new dat.GUI()
+const world = {
+  plane: {
+    width: 400,
+    height: 400,
+    widthSegments: 50,
+    heightSegments: 50
+  }
+}
+gui.add(world.plane, 'width', 1, 500).onChange(generatePlane)
 
-// let sceneReady = false
-// const loadingManager = new THREE.LoadingManager(
-//   // Loaded
-//   () => {
-//     // Wait a little
-//     window.setTimeout(() => {
-//       // Animate overlay
-//       gsap.to(overlayMaterial.uniforms.uAlpha, {
-//         duration: 3,
-//         value: 0,
-//         delay: 1
-//       })
+gui.add(world.plane, 'height', 1, 500).onChange(generatePlane)
+gui.add(world.plane, 'widthSegments', 1, 100).onChange(generatePlane)
+gui.add(world.plane, 'heightSegments', 1, 100).onChange(generatePlane)
 
-//       // Update loadingBarElement
-//       loadingBarElement.classList.add('ended')
-//       loadingBarElement.style.transform = ''
-//     }, 500)
+function generatePlane() {
+  planeMesh.geometry.dispose()
+  planeMesh.geometry = new THREE.PlaneGeometry(
+    world.plane.width,
+    world.plane.height,
+    world.plane.widthSegments,
+    world.plane.heightSegments
+  )
 
-//     window.setTimeout(() => {
-//       sceneReady = true
-//     }, 2000)
-//   },
+  // vertice position randomization
+  const { array } = planeMesh.geometry.attributes.position
+  const randomValues = []
+  for (let i = 0; i < array.length; i++) {
+    if (i % 3 === 0) {
+      const x = array[i]
+      const y = array[i + 1]
+      const z = array[i + 2]
 
-//   // Progress
-//   (itemUrl, itemsLoaded, itemsTotal) => {
-//     // Calculate the progress and update the loadingBarElement
-//     const progressRatio = itemsLoaded / itemsTotal
-//     loadingBarElement.style.transform = `scaleX(${progressRatio})`
-//   }
-// )
-// const gltfLoader = new GLTFLoader(loadingManager)
-// const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager)
+      array[i] = x + (Math.random() - 0.5) * 3
+      array[i + 1] = y + (Math.random() - 0.5) * 3
+      array[i + 2] = z + (Math.random() - 0.5) * 3
+    }
 
-// /**
-//  * Base
-//  */
-// // Debug
-// const debugObject = {}
+    randomValues.push(Math.random() * Math.PI * 2)
+  }
 
-// // Canvas
-// const canvas = document.querySelector('canvas.webgl')
+  planeMesh.geometry.attributes.position.randomValues = randomValues
+  planeMesh.geometry.attributes.position.originalPosition =
+    planeMesh.geometry.attributes.position.array
 
-// // Scene
-// const scene = new THREE.Scene()
+  const colors = []
+  for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
+    colors.push(0, 0.19, 0.4)
+  }
 
-// /**
-//  * Overlay
-//  */
-// const overlayGeometry = new THREE.PlaneBufferGeometry(2, 2, 1, 1)
-// const overlayMaterial = new THREE.ShaderMaterial({
-//   // wireframe: true,
-//   transparent: true,
-//   uniforms: {
-//     uAlpha: { value: 1 }
-//   },
-//   vertexShader: `
-//         void main()
-//         {
-//             gl_Position = vec4(position, 1.0);
-//         }
-//     `,
-//   fragmentShader: `
-//         uniform float uAlpha;
+  planeMesh.geometry.setAttribute(
+    'color',
+    new THREE.BufferAttribute(new Float32Array(colors), 3)
+  )
+}
 
-//         void main()
-//         {
-//             gl_FragColor = vec4(0.0, 0.0, 0.0, uAlpha);
-//         }
-//     `
-// })
-// const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
-// scene.add(overlay)
+const raycaster = new THREE.Raycaster()
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(
+  75,
+  innerWidth / innerHeight,
+  0.1,
+  1000
+)
+const renderer = new THREE.WebGLRenderer()
 
-// /**
-//  * Update all materials
-//  */
-// const updateAllMaterials = () => {
-//   scene.traverse(child => {
-//     if (
-//       child instanceof THREE.Mesh &&
-//       child.material instanceof THREE.MeshStandardMaterial
-//     ) {
-//       // child.material.envMap = environmentMap
-//       child.material.envMapIntensity = debugObject.envMapIntensity
-//       child.material.needsUpdate = true
-//       child.castShadow = true
-//       child.receiveShadow = true
-//     }
-//   })
-// }
+renderer.setSize(innerWidth, innerHeight)
+renderer.setPixelRatio(devicePixelRatio)
+document.body.appendChild(renderer.domElement)
 
-// /**
-//  * Environment map
-//  */
-// const environmentMap = cubeTextureLoader.load([
-//   '/textures/environmentMaps/0/px.jpg',
-//   '/textures/environmentMaps/0/nx.jpg',
-//   '/textures/environmentMaps/0/py.jpg',
-//   '/textures/environmentMaps/0/ny.jpg',
-//   '/textures/environmentMaps/0/pz.jpg',
-//   '/textures/environmentMaps/0/nz.jpg'
-// ])
+new OrbitControls(camera, renderer.domElement)
+camera.position.z = 50
 
-// environmentMap.encoding = THREE.sRGBEncoding
+const planeGeometry = new THREE.PlaneGeometry(
+  world.plane.width,
+  world.plane.height,
+  world.plane.widthSegments,
+  world.plane.heightSegments
+)
+const planeMaterial = new THREE.MeshPhongMaterial({
+  side: THREE.DoubleSide,
+  flatShading: THREE.FlatShading,
+  vertexColors: true
+})
+const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
+scene.add(planeMesh)
+generatePlane()
 
-// scene.background = environmentMap
-// scene.environment = environmentMap
+const light = new THREE.DirectionalLight(0xffffff, 1)
+light.position.set(0, -1, 1)
+scene.add(light)
 
-// debugObject.envMapIntensity = 5
+const backLight = new THREE.DirectionalLight(0xffffff, 1)
+backLight.position.set(0, 0, -1)
+scene.add(backLight)
 
-// /**
-//  * Models
-//  */
-// gltfLoader.load('/models/DamagedHelmet/glTF/DamagedHelmet.gltf', gltf => {
-//   gltf.scene.scale.set(2.5, 2.5, 2.5)
-//   gltf.scene.rotation.y = Math.PI * 0.5
-//   scene.add(gltf.scene)
+const mouse = {
+  x: undefined,
+  y: undefined
+}
 
-//   updateAllMaterials()
-// })
+let frame = 0
+function animate() {
+  requestAnimationFrame(animate)
+  renderer.render(scene, camera)
+  raycaster.setFromCamera(mouse, camera)
+  frame += 0.01
 
-// /**
-//  * Points of interest
-//  */
-// const raycaster = new THREE.Raycaster()
-// const points = [
-//   {
-//     position: new THREE.Vector3(1.55, 0.3, -0.6),
-//     element: document.querySelector('.point-0')
-//   },
-//   {
-//     position: new THREE.Vector3(0.5, 0.8, -1.6),
-//     element: document.querySelector('.point-1')
-//   },
-//   {
-//     position: new THREE.Vector3(1.6, -1.3, -0.7),
-//     element: document.querySelector('.point-2')
-//   }
-// ]
+  const { array, originalPosition, randomValues } =
+    planeMesh.geometry.attributes.position
+  for (let i = 0; i < array.length; i += 3) {
+    // x
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.01
 
-// /**
-//  * Lights
-//  */
-// const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
-// directionalLight.castShadow = true
-// directionalLight.shadow.camera.far = 15
-// directionalLight.shadow.mapSize.set(1024, 1024)
-// directionalLight.shadow.normalBias = 0.05
-// directionalLight.position.set(0.25, 3, -2.25)
-// scene.add(directionalLight)
+    // y
+    array[i + 1] =
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.001
+  }
 
-// /**
-//  * Sizes
-//  */
-// const sizes = {
-//   width: window.innerWidth,
-//   height: window.innerHeight
-// }
+  planeMesh.geometry.attributes.position.needsUpdate = true
 
-// window.addEventListener('resize', () => {
-//   // Update sizes
-//   sizes.width = window.innerWidth
-//   sizes.height = window.innerHeight
+  const intersects = raycaster.intersectObject(planeMesh)
+  if (intersects.length > 0) {
+    const { color } = intersects[0].object.geometry.attributes
 
-//   // Update camera
-//   camera.aspect = sizes.width / sizes.height
-//   camera.updateProjectionMatrix()
+    // vertice 1
+    color.setX(intersects[0].face.a, 0.1)
+    color.setY(intersects[0].face.a, 0.5)
+    color.setZ(intersects[0].face.a, 1)
 
-//   // Update renderer
-//   renderer.setSize(sizes.width, sizes.height)
-//   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-// })
+    // vertice 2
+    color.setX(intersects[0].face.b, 0.1)
+    color.setY(intersects[0].face.b, 0.5)
+    color.setZ(intersects[0].face.b, 1)
 
-// /**
-//  * Camera
-//  */
-// // Base camera
-// const camera = new THREE.PerspectiveCamera(
-//   75,
-//   sizes.width / sizes.height,
-//   0.1,
-//   100
-// )
-// camera.position.set(4, 1, -4)
-// scene.add(camera)
+    // vertice 3
+    color.setX(intersects[0].face.c, 0.1)
+    color.setY(intersects[0].face.c, 0.5)
+    color.setZ(intersects[0].face.c, 1)
 
-// // Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = true
+    intersects[0].object.geometry.attributes.color.needsUpdate = true
 
-// /**
-//  * Renderer
-//  */
-// const renderer = new THREE.WebGLRenderer({
-//   canvas: canvas,
-//   antialias: true
-// })
-// renderer.physicallyCorrectLights = true
-// renderer.outputEncoding = THREE.sRGBEncoding
-// renderer.toneMapping = THREE.ReinhardToneMapping
-// renderer.toneMappingExposure = 3
-// renderer.shadowMap.enabled = true
-// renderer.shadowMap.type = THREE.PCFSoftShadowMap
-// renderer.setSize(sizes.width, sizes.height)
-// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    const initialColor = {
+      r: 0,
+      g: 0.19,
+      b: 0.4
+    }
 
-// /**
-//  * Animate
-//  */
-// const tick = () => {
-//   // Update controls
-//   controls.update()
+    const hoverColor = {
+      r: 0.1,
+      g: 0.5,
+      b: 1
+    }
 
-//   // Update points only when the scene is ready
-//   if (sceneReady) {
-//     // Go through each point
-//     for (const point of points) {
-//       // Get 2D screen position
-//       const screenPosition = point.position.clone()
-//       screenPosition.project(camera)
+    gsap.to(hoverColor, {
+      r: initialColor.r,
+      g: initialColor.g,
+      b: initialColor.b,
+      duration: 1,
+      onUpdate: () => {
+        // vertice 1
+        color.setX(intersects[0].face.a, hoverColor.r)
+        color.setY(intersects[0].face.a, hoverColor.g)
+        color.setZ(intersects[0].face.a, hoverColor.b)
 
-//       // Set the raycaster
-//       raycaster.setFromCamera(screenPosition, camera)
-//       const intersects = raycaster.intersectObjects(scene.children, true)
+        // vertice 2
+        color.setX(intersects[0].face.b, hoverColor.r)
+        color.setY(intersects[0].face.b, hoverColor.g)
+        color.setZ(intersects[0].face.b, hoverColor.b)
 
-//       // No intersect found
-//       if (intersects.length === 0) {
-//         // Show
-//         point.element.classList.add('visible')
-//       }
+        // vertice 3
+        color.setX(intersects[0].face.c, hoverColor.r)
+        color.setY(intersects[0].face.c, hoverColor.g)
+        color.setZ(intersects[0].face.c, hoverColor.b)
+        color.needsUpdate = true
+      }
+    })
+  }
+}
 
-//       // Intersect found
-//       else {
-//         // Get the distance of the intersection and the distance of the point
-//         const intersectionDistance = intersects[0].distance
-//         const pointDistance = point.position.distanceTo(camera.position)
+animate()
 
-//         // Intersection is close than the point
-//         if (intersectionDistance < pointDistance) {
-//           // Hide
-//           point.element.classList.remove('visible')
-//         }
-//         // Intersection is further than the point
-//         else {
-//           // Show
-//           point.element.classList.add('visible')
-//         }
-//       }
-
-//       const translateX = screenPosition.x * sizes.width * 0.5
-//       const translateY = -screenPosition.y * sizes.height * 0.5
-//       point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
-//     }
-//   }
-
-//   // Render
-//   renderer.render(scene, camera)
-
-//   // Call tick again on the next frame
-//   window.requestAnimationFrame(tick)
-// }
-
-// tick()
-
-// <!DOCTYPE html>
-// <html lang="en">
-// <head>
-//     <meta charset="UTF-8">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>32 - Mixing HTML and WebGL</title>
-// </head>
-// <body>
-
-//     <canvas class="webgl"></canvas>
-
-//     <div class="loading-bar"></div>
-
-//     <div class="point point-0">
-//         <div class="label">1</div>
-//         <div class="text">Front and top screen with HUD aggregating terrain and battle informations.</div>
-//     </div>
-//     <div class="point point-1">
-//         <div class="label">2</div>
-//         <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
-//     </div>
-//     <div class="point point-2">
-//         <div class="label">3</div>
-//         <div class="text">Cameras supporting night vision and heat vision with automatic adjustment.</div>
-//     </div>
-
-// </body>
-// </html>
+addEventListener('mousemove', event => {
+  mouse.x = (event.clientX / innerWidth) * 2 - 1
+  mouse.y = -(event.clientY / innerHeight) * 2 + 1
+})
