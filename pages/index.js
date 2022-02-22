@@ -7,22 +7,17 @@ import {
   Image,
   useColorModeValue
 } from '@chakra-ui/react'
-import styles from '../styles/Home.module.css'
 import Section from '../components/section'
 import Paragraph from '../components/paragraph'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { BioSection, BioYear } from '../components/bio'
+import AnimatedFilter from '../components/filter-animated'
 
 const Home = () => {
   return (
     <Container>
-      <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
-        <a href="#" class={styles.neonButton}>
-          eat; sleep; code; repeat;
-        </a>
-      </Box>
       <Box
-        broderRadius="lg"
+        borderRadius="lg"
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
         p={3}
         mb={6}
@@ -85,7 +80,13 @@ const Home = () => {
           Completed the Master&apos;s Mobile Computing at University of West
           London
         </BioSection>
+        <AnimatedFilter />
       </Section>
+      <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
+        <a href="#" className="neonButton">
+          eat; sleep; code; repeat;
+        </a>
+      </Box>
     </Container>
   )
 }
