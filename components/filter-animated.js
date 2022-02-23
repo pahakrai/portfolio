@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const AnimatedFilter = () => {
-  const [type, setType] = useState(null)
+const AnimatedFilter = ({ tag }) => {
+  const [type, setType] = useState(tag)
   const data = [
     {
       id: 1,
@@ -59,6 +59,11 @@ const AnimatedFilter = () => {
       src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
     }
   ]
+  useEffect(() => {
+    if (tag) {
+      setType(tag)
+    }
+  }, [tag])
   const dataType = ['work', 'experience', 'project']
   const filteredData = type ? data.filter(data => data.type === type) : data
   return (

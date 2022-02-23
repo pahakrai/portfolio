@@ -9,7 +9,7 @@ import { gsap } from 'gsap'
 //   return Math.sqrt(1 - Math.pow(x - 1, 4))
 // }
 
-const PortfolioModel = () => {
+const PortfolioModel = ({ onClickTag }) => {
   const refContainer = useRef()
   const loadingBarElement = useRef(null)
   const elementRef1 = useRef(null)
@@ -151,7 +151,13 @@ const PortfolioModel = () => {
       scene.add(ambientLight)
 
       const controls = new OrbitControls(camera, renderer.domElement)
-      controls.autoRotate = true
+      controls.autoRotate = false
+      // to disable zoom
+      controls.enableZoom = false
+      // // to disable rotation
+      // controls.enableRotate = false
+      // to disable pan
+      controls.enablePan = false
       controls.target = target
       setControls(controls)
 
@@ -203,7 +209,6 @@ const PortfolioModel = () => {
         if (true) {
           // Go through each point
           for (const point of points) {
-            console.log(point, 'point what')
             // Get 2D screen position
             const screenPosition = point.position.clone()
             screenPosition.project(camera)
@@ -243,23 +248,6 @@ const PortfolioModel = () => {
           }
         }
 
-        // NOTE: OLD CODE FOR REFERENCE
-        // frame = frame <= 100 ? frame + 1 : frame
-
-        // if (frame <= 100) {
-        //   const p = initialCameraPosition
-        //   const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
-
-        //   camera.position.y = 10
-        //   camera.position.x =
-        //     p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-        //   camera.position.z =
-        //     p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
-        //   camera.lookAt(target)
-        // } else {
-        //   controls.update()
-        // }
-
         renderer.render(scene, camera)
       }
 
@@ -282,31 +270,31 @@ const PortfolioModel = () => {
     <ModelContainer ref={refContainer}>
       {/* {loading && <ModelSpinner />} */}
       {!sceneReady && (
-        <div
-          ref={loadingBarElement}
-          className="loading-bar"
-          // style={{ display: 'none' }}
-        ></div>
+        <div ref={loadingBarElement} className="loading-bar"></div>
       )}
-      <div ref={elementRef1} className="point point-0">
+      <div
+        ref={elementRef1}
+        className="point point-0"
+        onClick={() => onClickTag('work')}
+      >
         <div className="label">1</div>
-        <div className="text">
-          Front and top screen with HUD aggregating terrain and battle
-          informations.
-        </div>
+        <div className="text">Work</div>
       </div>
-      <div ref={elementRef2} className="point point-1">
+      <div
+        ref={elementRef2}
+        className="point point-1"
+        onClick={() => onClickTag('experience')}
+      >
         <div className="label">2</div>
-        <div className="text">
-          Ventilation with air purifier and detection of environment toxicity.
-        </div>
+        <div className="text">Experience</div>
       </div>
-      <div ref={elementRef3} className="point point-2">
+      <div
+        ref={elementRef3}
+        className="point point-2"
+        onClick={() => onClickTag('project')}
+      >
         <div className="label">3</div>
-        <div className="text">
-          Cameras supporting night vision and heat vision with automatic
-          adjustment.
-        </div>
+        <div className="text">Projects</div>
       </div>
     </ModelContainer>
   )

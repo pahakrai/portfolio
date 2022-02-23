@@ -12,8 +12,11 @@ import Paragraph from '../components/paragraph'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { BioSection, BioYear } from '../components/bio'
 import AnimatedFilter from '../components/filter-animated'
+import LazyModel from '../components/lazy-model'
+import { useState } from 'react'
 
 const Home = () => {
+  const [tag, setTag] = useState(null)
   return (
     <Container>
       <Box
@@ -30,7 +33,7 @@ const Home = () => {
           <Heading as="h2" variant="page-title">
             Pahak Rai
           </Heading>
-          <p>Digital Craftman (Developer / Designer)</p>
+          <p>Developer / Designer</p>
         </Box>
         <Box
           flexShrink={0}
@@ -80,7 +83,8 @@ const Home = () => {
           Completed the Master&apos;s Mobile Computing at University of West
           London
         </BioSection>
-        <AnimatedFilter />
+        <LazyModel onClickTag={t => setTag(t)} />
+        <AnimatedFilter tag={tag} />
       </Section>
       <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
         <a href="#" className="neonButton">
