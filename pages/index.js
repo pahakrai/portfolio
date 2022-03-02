@@ -24,9 +24,25 @@ const Home = () => {
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
         p={3}
         mb={6}
-        align="center"
+        // align="center"
       >
-        Hello, I&apos;m a full-stack developer based in Hong Kong
+        <h1>
+          Coding is
+          <div className="scroller">
+            <span>
+              Cool
+              <br />
+              Art
+              <br />
+              Intruiging
+              <br />
+              Challenging
+            </span>
+          </div>
+        </h1>
+        <p className="note">
+          Hello, I&apos;m a full-stack developer based in Hong Kong
+        </p>
       </Box>
       <Box display={{ md: 'flex' }}>
         <Box flexGrow={1}>
