@@ -18,8 +18,22 @@ import { useState } from 'react'
 const Home = () => {
   const [tag, setTag] = useState(null)
   return (
-    <Container>
-      <Box
+    <Container maxWidth={'container.xl'}>
+      <div className="headingWrapper color-bright">
+        <text
+          id="text"
+          transform="translate(2,116)"
+          fontFamily="'Cabin Condensed'"
+          fontSize="161.047"
+          className="header header--pushDown header--shadow"
+        >
+          PAHAK RAI
+        </text>
+      </div>
+      <p className="note">
+        Hello, I&apos;m a full-stack developer based in Hong Kong
+      </p>
+      {/* <Box
         borderRadius="lg"
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
         p={3}
@@ -43,7 +57,7 @@ const Home = () => {
         <p className="note">
           Hello, I&apos;m a full-stack developer based in Hong Kong
         </p>
-      </Box>
+      </Box> */}
       <Box display={{ md: 'flex' }}>
         <Box flexGrow={1}>
           <Heading as="h2" variant="page-title">
@@ -99,7 +113,6 @@ const Home = () => {
           Completed the Master&apos;s Mobile Computing at University of West
           London
         </BioSection>
-        <LazyModel onClickTag={t => setTag(t)} />
         <AnimatedFilter tag={tag} />
       </Section>
       <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>

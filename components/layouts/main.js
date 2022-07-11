@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { Box, Container } from '@chakra-ui/react'
 import Navbar from '../navbar'
+import LazyModel from '../lazy-model'
 
 const Main = ({ children, router }) => {
   return (
@@ -10,7 +11,16 @@ const Main = ({ children, router }) => {
         <title>Pahak Rai - Homepage</title>
       </Head>
       <Navbar path={router.asPath} />
-      <Container maxW="container.lg" pt={14}>
+      <LazyModel onClickTag={t => setTag(t)} />
+      <Container
+        pt={14}
+        alignItems={'auto'}
+        w="100%"
+        maxWidth="100%"
+        paddingInline={0}
+        position="absolute"
+        // zIndex={99}
+      >
         {children}
       </Container>
     </Box>

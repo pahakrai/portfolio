@@ -1,0 +1,573 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.neonButton {
+  --clr-neon: hsl(180 100% 54%);
+  --clr-bg: hsl(189 21% 16%);
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--clr-neon);
+  border: var(--clr-neon) 0.125em solid;
+  padding: 0.25em 1em;
+  border-radius: 0.25em;
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+  box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+  position: relative;
+}
+
+.neonButton::before {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  background: var(--clr-neon);
+  top: 120%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+  filter: blur(1em);
+  opacity: 0.7;
+}
+
+.neonButton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 2em 0.5em var(--clr-neon);
+  opacity: 0;
+  background-color: var(--clr-neon);
+  z-index: -1;
+  transition: opacity 100ms linear;
+}
+
+.neonButton:hover,
+.neonButton:focus {
+  color: var(--clr-bg);
+  text-shadow: none;
+}
+
+.neonButton:hover::before,
+.neonButton:focus::before {
+  opacity: 0.5;
+}
+.neonButton:hover::after,
+.neonButton:focus::after {
+  opacity: 0.5;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-column-gap: 1rem;
+  grid-row-gap: 2rem;
+}
+
+.movies img {
+  width: 100%;
+  height: 30vh;
+  object-fit: cover;
+}
+
+.filter-container button {
+  margin-right: 2rem;
+  min-width: 5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: white;
+  color: rgb(65, 98, 168);
+  border-radius: 1rem;
+  border: 2px solid rgb(28, 36, 53);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.active {
+  background: rgb(65, 98, 168);
+  color: white;
+}
+
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+}
+
+.loading-bar {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: #ffffff;
+  transform: scaleX(0.3);
+  transform-origin: top left;
+  transition: transform 0.5s;
+}
+
+.loading-bar.ended {
+  transform: scaleX(0);
+  transform-origin: 100% 0;
+  transition: transform 1.5s ease-in-out;
+}
+
+.point {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* pointer-events: none; */
+}
+
+.point .label {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #00000077;
+  border: 1px solid #ffffff77;
+  color: #ffffff;
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 100;
+  font-size: 14px;
+  cursor: help;
+  transform: scale(0, 0);
+  transition: transform 0.3s;
+}
+
+.point .text {
+  position: absolute;
+  top: 30px;
+  left: -120px;
+  width: 200px;
+  padding: 20px;
+  border-radius: 4px;
+  background: #00000077;
+  border: 1px solid #ffffff77;
+  color: #ffffff;
+  line-height: 1.3em;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.point:hover .text {
+  opacity: 1;
+}
+
+.point.visible .label {
+  transform: scale(1, 1);
+}
+
+.note::after {
+  content: '';
+  width: 20%;
+  height: 2px;
+  border-radius: 999px;
+  background-color: #afafaf;
+  background: linear-gradient(
+    135deg,
+    rgba(43, 171, 217, 1) 0%,
+    rgba(0, 130, 200, 1) 100%
+  );
+  position: absolute;
+  top: -1.8em;
+  left: 0;
+}
+
+.note {
+  font-size: 0.8em;
+  color: #8a8a8a;
+  position: relative;
+  margin-top: 4em;
+}
+
+/* Scroller styling */
+.scroller {
+  height: 1.2em;
+  line-height: 1.2em;
+  position: relative;
+  overflow: hidden;
+  width: 10em;
+}
+
+.scroller > span {
+  position: absolute;
+  top: 0;
+  animation: slide 5s infinite;
+  font-weight: bold;
+}
+
+@keyframes slide {
+  0% {
+    top: 0;
+  }
+  25% {
+    top: -1.2em;
+  }
+  50% {
+    top: -2.4em;
+  }
+  75% {
+    top: -3.6em;
+  }
+}
+
+/*
+	The following mixin is taken and edited from this pen - https://codepen.io/hugo/pen/xzjGB
+	I have added outlineColor to allow the addition of a text-shadow outline for the text.
+ */
+
+@function pow($number, $exp) {
+  $value: 1;
+  @if $exp > 0 {
+    @for $i from 1 through $exp {
+      $value: $value * $number;
+    }
+  } @else if $exp < 0 {
+    @for $i from 1 through -$exp {
+      $value: $value / $number;
+    }
+  }
+  @return $value;
+}
+
+@function fact($number) {
+  $value: 1;
+  @if $number > 0 {
+    @for $i from 1 through $number {
+      $value: $value * $i;
+    }
+  }
+  @return $value;
+}
+
+@function pi() {
+  @return 3.14159265359;
+}
+
+@function rad($angle) {
+  $unit: unit($angle);
+  $unitless: $angle / ($angle * 0 + 1);
+  // If the angle has 'deg' as unit, convert to radians.
+  @if $unit == deg {
+    $unitless: $unitless / 180 * pi();
+  }
+  @return $unitless;
+}
+
+@function sin($angle) {
+  $sin: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+  }
+  @return $sin;
+}
+
+@function cos($angle) {
+  $cos: 0;
+  $angle: rad($angle);
+  // Iterate a bunch of times.
+  @for $i from 0 through 10 {
+    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+  }
+  @return $cos;
+}
+
+@mixin shade(
+  $type,
+  $color: #3498db,
+  $borderColor: #fff,
+  $depth: 20,
+  $angle: 135deg,
+  $long: false,
+  $fade: false
+) {
+  $angle: ($angle - 90);
+  $x: 1.1 * cos($angle) + 0px;
+  $y: 1.1 * sin($angle) + 0px;
+  $darken: (lightness($color) / $depth)/2;
+  $opacify: 0;
+  $shadow: ();
+
+  @if $long == true {
+    $darken: 0;
+  }
+
+  @if $fade == true {
+    $opacify: (opacity($color) / $depth);
+    // added this for rendering in some browsers, remove if you like.
+    @include translateZ(0);
+  }
+
+  @for $i from 1 through $depth {
+    $shadow: $shadow,
+      $i *
+        $x
+        $i *
+        $y
+        0
+        hsla(
+          hue($color),
+          saturation($color),
+          (lightness($color) - ($i * $darken)),
+          1 - ($i * $opacify)
+        );
+  }
+  #{$type}-shadow: 1.5px 1.5px 0 $borderColor, 0px 1.5px 0 $borderColor,
+    -1.5px -1.5px 0 $borderColor, -1.5px -1.5px 0 $borderColor,
+    -1.5px 1.5px 0 $borderColor, 1.5px -1.5px 0 $borderColor, $shadow;
+}
+
+//mixin to provide just a basic outline for the text
+@mixin outline($color: #fff) {
+  text-shadow: 1.5px 1.5px 0 $color, -1.5px -1.5px 0 $color,
+    -1.5px -1.5px 0 $color, -1.5px 1.5px 0 $color, 1.5px -1.5px 0 $color;
+}
+
+// Define the fonts used in the Pen
+@import url(https://fonts.googleapis.com/css?family=Francois+One);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans);
+
+// Define the colors
+$pink: #f89bb4;
+$pinkPastel: #ebaca5;
+$pinkDark: #e62915;
+$pinkGrayed: #d38076;
+
+$grayLight: #cac6c5;
+$offWhite: #e7e7e7;
+
+// * {
+//   box-sizing: border-box;
+// }
+
+// body {
+//   font-size: 62.5%;
+// }
+
+//basic header styles
+h1,
+h2,
+h3 {
+  font-family: 'PT Sans', sans-serif;
+  text-transform: uppercase;
+}
+// h1 {
+//   font-size: 2.4em;
+//   background-color: rgba(41, 41, 41, 1);
+//   text-align: center;
+//   padding: 20px;
+//   margin: 0;
+//   color: #fff;
+
+//   a {
+//     display: block;
+//     margin-top: 10px;
+//     text-transform: none;
+//     color: #aaa;
+//     font-size: 16px;
+//     text-decoration: none;
+//   }
+// }
+// h2 {
+//   font-size: 1.6em;
+//   margin: 0;
+//   padding: 10px;
+//   border-top: 1px solid #ccc;
+// }
+// h3 {
+//   margin: 0;
+//   padding: 10px;
+// }
+
+// Outer heading wrapper (for descriptions, not for the actual effects)
+.headingOuter {
+  background: #f1f1f1;
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+
+  &:first-child {
+    margin-top: 0;
+  }
+  h1 + & {
+    margin-top: 10px;
+  }
+}
+.headingWrapper {
+  text-align: center;
+  background-color: #fff;
+  padding: 10px;
+}
+
+// default header class – used on all examples
+.header {
+  display: inline-block;
+  text-align: center;
+  font-family: 'Francois One', Helvetica, Arial, sans-serif;
+  font-size: 96px;
+  color: $offWhite;
+  text-decoration: none;
+
+  @include outline($grayLight);
+
+  transition: all 400ms ease-in-out;
+}
+
+// effect for pushing the text down onto the page
+// default is the letters emerging from the page and merging back down on hover
+.header--pushDown {
+  @include shade(text, #aaa, #333, 10, 135deg, true);
+
+  &:hover {
+    transform: translate(9px, 9px);
+    @include outline($grayLight);
+  }
+}
+
+// raising text from page when hovered, so flipped state to header--pushDown class
+.header--raiseUp {
+  &:hover {
+    transform: translate(-9px, -9px);
+    @include shade(text, #aaa, #333, 10, 135deg, true);
+  }
+}
+
+// creates a shadow effect, rather than a raised lettering effect
+// simply by adjusting the translate position a little
+.header--shadow {
+  &:hover {
+    transform: translate(5px, 0);
+  }
+
+  &.header--raiseUp {
+    &:hover {
+      transform: translate(-5px, 0);
+    }
+  }
+}
+
+//Brighter colored text
+.color-bright {
+  background-color: $pinkPastel;
+
+  & .header {
+    color: $pink;
+    @include outline($pinkGrayed);
+  }
+
+  //push down text
+  & .header--pushDown {
+    @include shade(text, $pinkDark, #fff, 10, 135deg, true);
+
+    &:hover {
+      @include outline($pinkGrayed);
+    }
+  }
+
+  //raise up text
+  & .header--raiseUp:hover {
+    @include shade(text, $pinkDark, #fff, 10, 135deg, true);
+  }
+}
+
+// SVG Pattern text effect
+// Same as the above but with a pattern text effect on hover
+// Played around with this for a while – cannot be done with background clip and a CSS gradient as the
+// text-shadow always appears in front of the background (unless you have no background color on the wrapping element)
+// Therefore, use SVG linearGradient and animate the stop points using CSS
+svg {
+  // position: absolute;
+  margin: 0 auto;
+  // top: 50%;
+  // left: 50%;
+  // margin-left: -225px;
+}
+.header--svg {
+  text,
+  stop {
+    transition: all 350ms ease-in-out;
+  }
+  text {
+    text-transform: uppercase;
+    fill: url(#striped);
+    @include outline($grayLight);
+  }
+  &:hover text {
+    @include shade(text, #aaa, #333, 10, 135deg, true);
+  }
+
+  //animate gradient stop points
+  & stop {
+    stop-color: $offWhite;
+  }
+  &:hover stop {
+    stop-color: #fff;
+
+    &:nth-child(2),
+    &:nth-child(3) {
+      stop-color: $pinkGrayed;
+    }
+  }
+}
+
+// Brighter version of the SVG pattern text
+.color-bright {
+  & .header--svg {
+    text {
+      fill: url(#stripedColor);
+      @include outline($pinkGrayed);
+    }
+    &:hover text {
+      @include shade(text, $pinkDark, #fff, 10, 135deg, true);
+    }
+  }
+  & stop {
+    stop-color: $pink;
+  }
+  & .header--svg:hover stop {
+    &:nth-child(2),
+    &:nth-child(3) {
+      stop-color: #ed5751;
+    }
+  }
+}
+
+// main {
+//   z-index: 99;
+//   position: absolute;
+//   width: 100%;
+//   margin: 0px auto;
+//   padding: 120px 0px;
+//   display: grid;
+//   grid-template-columns: repeat(12, 1fr);
+// }

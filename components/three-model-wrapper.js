@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { Box, Spinner } from '@chakra-ui/react'
+import { Box2 } from 'three'
 
 export const ModelSpinner = () => (
   <Spinner
@@ -15,13 +16,15 @@ export const ModelSpinner = () => (
 export const ModelContainer = forwardRef(({ children }, ref) => (
   <Box
     ref={ref}
-    className="voxel-dog"
-    m="auto"
-    mt={['-20px', '-20px']}
-    mb={['-20px', '-20px']}
-    w={[380, 380]}
-    h={[380, 380]}
-    position="relative"
+    width={'100%'}
+    maxWidth={'100%'}
+    // m="auto"
+    // className="voxel-dog"
+    // mt={['-20px', '-20px']}
+    // mb={['-20px', '-20px']}
+    // w={[2160, 2160]}
+    // h={[2160, 2160]}
+    position="fixed"
   >
     {children}
   </Box>
