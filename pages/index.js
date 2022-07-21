@@ -5,6 +5,7 @@ import {
   Box,
   Heading,
   Image,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react'
 import Section from '../components/section'
@@ -19,20 +20,40 @@ const Home = () => {
   const [tag, setTag] = useState(null)
   return (
     <Container maxWidth={'container.xl'}>
-      <div className="headingWrapper color-bright">
-        <text
-          id="text"
-          transform="translate(2,116)"
-          fontFamily="'Cabin Condensed'"
-          fontSize="161.047"
-          className="header header--pushDown header--shadow"
+      <Box className="shape" alignItems={'center'} justifyContent="center">
+        <Box
+          flexShrink={0}
+          mt={{ base: 4, md: 0 }}
+          ml={{ md: 6 }}
+          align="center"
         >
-          PAHAK RAI
-        </text>
-      </div>
-      <p className="note">
-        Hello, I&apos;m a full-stack developer based in Hong Kong
-      </p>
+          <Image
+            borderColor="whiteAlpha.800"
+            borderwidth={2}
+            borderStyle="solid"
+            height="100px"
+            width="100px"
+            display="inline-block"
+            borderRadius="full"
+            src="/images/pahak.png"
+            alt="Profile Image"
+          />
+        </Box>
+        <div className="headingWrapper color-bright">
+          <text
+            id="text"
+            transform="translate(2,116)"
+            fontFamily="'Cabin Condensed'"
+            fontSize="161.047"
+            className="header header--pushDown header--shadow"
+          >
+            PAHAK RAI
+          </text>
+        </div>
+        <Text fontSize="md" alignItems={'center'}>
+          Developer / Designer
+        </Text>
+      </Box>
       {/* <Box
         borderRadius="lg"
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
@@ -60,10 +81,9 @@ const Home = () => {
       </Box> */}
       <Box display={{ md: 'flex' }}>
         <Box flexGrow={1}>
-          <Heading as="h2" variant="page-title">
-            Pahak Rai
-          </Heading>
-          <p>Developer / Designer</p>
+          <Text fontSize="md" className="note">
+            Hello, I&apos;m a full-stack developer based in Hong Kong
+          </Text>
         </Box>
         <Box
           flexShrink={0}
@@ -71,7 +91,7 @@ const Home = () => {
           ml={{ md: 6 }}
           align="center"
         >
-          <Image
+          {/* <Image
             borderColor="whiteAlpha.800"
             borderwidth={2}
             borderStyle="solid"
@@ -80,7 +100,7 @@ const Home = () => {
             borderRadius="full"
             src="/images/pahak.png"
             alt="Profile Image"
-          />
+          /> */}
         </Box>
       </Box>
       <Section delay={0.1}>
