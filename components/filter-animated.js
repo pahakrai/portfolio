@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
@@ -68,40 +69,40 @@ const AnimatedFilter = ({ tag }) => {
   const filteredData = type ? data.filter(data => data.type === type) : data
   return (
     <div>
-      <h2>{type}</h2>
-      <div>
-        {dataType.map((type, idx) => (
-          <button
-            key={idx}
-            onClick={() => setType(type)}
-            style={{
-              borderWidth: 2,
-              borderColor: 'black',
-              padding: 4,
-              borderRadius: 16,
-              marginRight: 4
-            }}
-          >
-            {type}
-          </button>
-        ))}
-        <button onClick={() => setType(null)}>clear</button>
-      </div>
-      <motion.div layout className="movies">
-        {filteredData.map((pr, idx) => (
-          <AnimatePresence key={idx}>
-            <motion.div
-              layout
-              animate={{ opacity: 1 }}
-              initial={{ opacity: 0 }}
-              exit={{ opacity: 0 }}
+      <Box className="filter-option">
+        <div className="tags">
+          {dataType.map((t, idx) => (
+            <button
+              key={idx}
+              onClick={() => setType(t)}
+              className={`tag ${t === type ? 'active' : ''}`}
             >
-              <h2>{pr.data}</h2>
-              <img src={pr.src} alt=""></img>
-            </motion.div>
-          </AnimatePresence>
-        ))}
-      </motion.div>
+              {t}
+            </button>
+          ))}
+          {/* <button onClick={() => setType(null)}>clear</button> */}
+        </div>
+      </Box>
+      <Box>
+        <motion.div layout className="movies">
+          {filteredData.map((pr, idx) => (
+            <AnimatePresence key={idx}>
+              <motion.div
+                layout
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                className="filter"
+              >
+                <h2 style={{ position: 'absolute', padding: '20px' }}>
+                  {pr.data}
+                </h2>
+                <img src={pr.src} alt="" style={{}}></img>
+              </motion.div>
+            </AnimatePresence>
+          ))}
+        </motion.div>
+      </Box>
     </div>
   )
 }
