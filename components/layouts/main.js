@@ -10,7 +10,7 @@ const Main = ({ children, router }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pahak Rai - Homepage</title>
       </Head>
-      <Navbar path={router.asPath} />
+      {/* <Navbar path={router.asPath} /> */}
       <LazyModel onClickTag={t => setTag(t)} />
       <Container
         pt={14}

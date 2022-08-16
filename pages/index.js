@@ -15,6 +15,7 @@ import { BioSection, BioYear } from '../components/bio'
 import AnimatedFilter from '../components/filter-animated'
 import LazyModel from '../components/lazy-model'
 import { useState } from 'react'
+import Skills from '../components/skills'
 
 const Home = () => {
   const [tag, setTag] = useState(null)
@@ -113,9 +114,9 @@ const Home = () => {
           dabbling with music or hiking.
         </Paragraph>
         <Box align="center" my={4}>
-          <NextLink href="/works">
+          <NextLink href="https://github.com/pahakrai">
             <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
-              Portfolio
+              Github
             </Button>
           </NextLink>
         </Box>
@@ -133,7 +134,12 @@ const Home = () => {
           Completed the Master&apos;s Mobile Computing at University of West
           London
         </BioSection>
+      </Section>
+      <Section>
         <AnimatedFilter tag={tag} />
+      </Section>
+      <Section>
+        <Skills />
       </Section>
       <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
         <a href="#" className="neonButton">

@@ -1,63 +1,64 @@
-import { Box } from '@chakra-ui/react'
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 const AnimatedFilter = ({ tag }) => {
-  const [type, setType] = useState(tag)
+  const [type, setType] = useState(tag || 'experience')
   const data = [
     {
       id: 1,
-      type: 'work',
-      data: 'wat wat',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'project',
+      data: 'Buyco',
+      src: 'buyco.png'
     },
     {
       id: 2,
-      type: 'work',
-      data: 'wat wat 2',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'project',
+      data: 'BrilliantWealthy',
+      src: 'brilliantwealthy.png'
     },
     {
       id: 3,
-      type: 'work',
-      data: 'wat wat 3',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'project',
+      data: 'PTimes',
+      src: 'ptimes.png'
     },
     {
       id: 4,
-      type: 'experience',
-      data: 'wat wat 4',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'project',
+      data: 'Busgo',
+      src: 'busgo.png'
     },
     {
       id: 5,
-      type: 'experience',
-      data: 'wat wat 5',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'project',
+      data: 'FutureMakers',
+      src: 'futuremakers.png'
     },
     {
       id: 6,
       type: 'experience',
-      data: 'wat wat 6',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      data: 'Web Development',
+      description:
+        'Design and development with HTML, CSS, JS. React is my current preferred framwork for web.',
+      src: 'azurlane.jpg'
     },
     {
       id: 7,
-      type: 'project',
-      data: 'wat wat 7',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'experience',
+      data: 'Mobile App Development',
+      description:
+        'Design and deploy mobile hybrid applications with React Native and Flutter.',
+      src: 'azurlane.jpg'
     },
     {
       id: 8,
-      type: 'project',
-      data: 'wat wat 8',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
-    },
-    {
-      id: 9,
-      type: 'project',
-      data: 'wat wat 9',
-      src: 'https://images.ctfassets.net/lzny33ho1g45/1V3XE89tOdr6aRGp3WxywW/b2aa4e5f754c4984e5c125e75e3aa7e3/app-tips-gooogle-meet.jpg?w=1520&fm=jpg&q=30&fit=thumb&h=760'
+      type: 'experience',
+      data: 'Backend Developemnt',
+      description:
+        'Experience in Backend Development with NodeJS, PHP and currently in demand AWS infrastructure',
+      src: 'azurlane.jpg'
     }
   ]
   useEffect(() => {
@@ -65,44 +66,78 @@ const AnimatedFilter = ({ tag }) => {
       setType(tag)
     }
   }, [tag])
-  const dataType = ['work', 'experience', 'project']
+  const dataType = ['experience', 'project']
   const filteredData = type ? data.filter(data => data.type === type) : data
   return (
     <div>
-      <Box className="filter-option">
-        <div className="tags">
+      {/* <Box className="filter-option">
+        <div className="tags"></div>
+      </Box> */}
+      {/* <Box> */}
+      <Tabs variant="soft-rounded" colorScheme="green" id="projects-tabs">
+        <TabList>
           {dataType.map((t, idx) => (
-            <button
+            <Tab
               key={idx}
               onClick={() => setType(t)}
+              // className={'tag'}
               className={`tag ${t === type ? 'active' : ''}`}
             >
-              {t}
-            </button>
+              <span> {t}</span>
+            </Tab>
           ))}
           {/* <button onClick={() => setType(null)}>clear</button> */}
-        </div>
-      </Box>
-      <Box>
-        <motion.div layout className="movies">
-          {filteredData.map((pr, idx) => (
-            <AnimatePresence key={idx}>
-              <motion.div
-                layout
-                animate={{ opacity: 1 }}
-                initial={{ opacity: 0 }}
-                exit={{ opacity: 0 }}
-                className="filter"
-              >
-                <h2 style={{ position: 'absolute', padding: '20px' }}>
-                  {pr.data}
-                </h2>
-                <img src={pr.src} alt="" style={{}}></img>
-              </motion.div>
-            </AnimatePresence>
-          ))}
+        </TabList>
+        <motion.div layout>
+          <TabPanels>
+            <TabPanel className="filters">
+              {filteredData.map((pr, idx) => (
+                <AnimatePresence key={idx}>
+                  <motion.div
+                    layout
+                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="filter"
+                  >
+                    <div className="experience-txtx">
+                      <h3>{pr.data}</h3>
+                      <span style={{ marginTop: '16px' }}>
+                        {pr.description}
+                      </span>
+                    </div>
+                    {pr.src && (
+                      <img src={pr.src} style={{ objectFit: 'cover' }} />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              ))}
+            </TabPanel>
+            <TabPanel className="filters">
+              {filteredData.map((pr, idx) => (
+                <AnimatePresence key={idx}>
+                  <motion.div
+                    layout
+                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="filter"
+                  >
+                    <div className="proj-imgbx">
+                      <img src={pr.src} style={{ objectFit: 'cover' }} />
+                      <div className="proj-txtx">
+                        <h4>{pr.data}</h4>
+                        <span>{pr.data}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              ))}
+            </TabPanel>
+          </TabPanels>
         </motion.div>
-      </Box>
+      </Tabs>
+      {/* </Box> */}
     </div>
   )
 }
