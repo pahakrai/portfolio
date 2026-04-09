@@ -23,6 +23,11 @@ const Skills = () => {
       icon: 'typescript.png'
     },
     {
+      name: 'Angular',
+      bgColor: '#fff',
+      icon: 'angular.png'
+    },
+    {
       name: 'Redux',
       bgColor: '#fff',
       icon: 'redux.png'
@@ -41,6 +46,11 @@ const Skills = () => {
       name: 'Mongo',
       bgColor: '#fff',
       icon: 'mongo.png'
+    },
+    {
+      name: 'PostgreSQL',
+      bgColor: '#fff',
+      icon: 'postgresql.png'
     },
     {
       name: 'Node',

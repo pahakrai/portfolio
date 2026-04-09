@@ -25,6 +25,8 @@ export const ModelContainer = forwardRef(({ children }, ref) => (
     // w={[2160, 2160]}
     // h={[2160, 2160]}
     position="fixed"
+    zIndex={-1}
+    className="webgl"
   >
     {children}
   </Box>

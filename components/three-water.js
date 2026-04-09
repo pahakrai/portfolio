@@ -43,13 +43,6 @@ const ThreeWater = () => {
   const [renderer, setRenderer] = useState()
   const [_camera, setCamera] = useState()
   const [target] = useState(new THREE.Vector3(-0.5, 1, 0))
-  const [initialCameraPosition] = useState(
-    new THREE.Vector3(
-      1 * Math.sin(0.2 * Math.PI),
-      0.5,
-      1 * Math.cos(0.2 * Math.PI)
-    )
-  )
   const [scene] = useState(new THREE.Scene())
   const [_controls, setControls] = useState()
 
@@ -102,8 +95,20 @@ const ThreeWater = () => {
       container.appendChild(renderer.domElement)
       setRenderer(renderer)
 
-      // Geometry
-      const waterGeometry = new THREE.PlaneBufferGeometry(2, 2, 512, 512)
+      // Geometry - responsive size based on screen width
+      const screenWidth = window.innerWidth
+      const baseSize = 4
+      // Responsive scaling: larger geometry on smaller screens
+      let scaleFactor = 1
+      if (screenWidth < 480) { // Mobile phones
+        scaleFactor = 2.0
+      } else if (screenWidth < 768) { // Tablets
+        scaleFactor = 1.5
+      } else { // Desktop
+        scaleFactor = 1
+      }
+      const geometrySize = baseSize * scaleFactor
+      const waterGeometry = new THREE.PlaneBufferGeometry(geometrySize, geometrySize, 512, 512)
       // Mesh
       const water = new THREE.Mesh(waterGeometry, waterMaterial)
       water.rotation.x = -Math.PI * 0.5
@@ -112,9 +117,24 @@ const ThreeWater = () => {
       /**
        * Camera
        */
-      // Base camera
-      const camera = new THREE.PerspectiveCamera(75, scW / scH, 0.1, 1000)
+      // Base camera - adjust FOV for different screen sizes
+      let fov = 75
+      let cameraDistance = 2
+      if (screenWidth < 480) { // Mobile phones
+        fov = 55
+        cameraDistance = 1.2
+      } else if (screenWidth < 768) { // Tablets
+        fov = 60
+        cameraDistance = 1.5
+      } // Desktop keeps defaults
+      const camera = new THREE.PerspectiveCamera(fov, scW / scH, 0.1, 1000)
+      const initialCameraPosition = new THREE.Vector3(
+        cameraDistance * Math.sin(0.2 * Math.PI),
+        0.5,
+        cameraDistance * Math.cos(0.2 * Math.PI)
+      )
       camera.position.copy(initialCameraPosition)
+      const initialCamPos = initialCameraPosition.clone()
       // camera.position.setZ(30)
       // camera.clearViewOffset()
       // camera.lookAt(target)
@@ -149,17 +169,18 @@ const ThreeWater = () => {
       const onScroll = () => {
         const t = document.body.getBoundingClientRect().top
 
-        // water.rotation.x += 0.05
-        // water.rotation.y += 0.075
-        water.rotation.z += 0.05
+        // Smooth rotation based on scroll position
+        water.rotation.z = t * -0.0001
 
-        // camera.position.z = t * -0.01
-        camera.position.x = t * -0.0002
-        camera.position.y = t * -0.0002
+        // Camera movement based on scroll position (add to initial position)
+        camera.position.x = initialCamPos.x + t * -0.0001
+        camera.position.y = initialCamPos.y + t * -0.0001
+        camera.position.z = initialCamPos.z + t * -0.001
       }
       // clean up code
-      window.removeEventListener('scroll', onScroll)
-      window.addEventListener('scroll', onScroll, { passive: true })
+      const throttledOnScroll = throttle(onScroll, 16)
+      window.removeEventListener('scroll', throttledOnScroll)
+      window.addEventListener('scroll', throttledOnScroll, { passive: true })
 
       /**
        * Animate
@@ -181,7 +202,7 @@ const ThreeWater = () => {
       animate()
 
       return () => {
-        window.removeEventListener('scroll', onScroll)
+        window.removeEventListener('scroll', throttledOnScroll)
         cancelAnimationFrame(req)
         renderer.dispose()
       }

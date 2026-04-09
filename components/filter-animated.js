@@ -1,47 +1,54 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 const AnimatedFilter = ({ tag }) => {
   const [type, setType] = useState(tag || 'experience')
+  const accentColor = useColorModeValue('#88ccca', '#FFD700')
+  const secondaryBg = useColorModeValue('#e8e0d5', '#2d2d32')
   const data = [
     {
       id: 1,
       type: 'project',
       data: 'Buyco',
-      src: 'buyco.png'
+      src: 'buyco.png',
+      description: 'An e-commerce platform with modern UI/UX, shopping cart, and payment integration.'
     },
     {
       id: 2,
       type: 'project',
       data: 'BrilliantWealthy',
-      src: 'brilliantwealthy.png'
+      src: 'brilliantwealthy.png',
+      description: 'A financial planning application with investment tracking and wealth management features.'
     },
     {
       id: 3,
       type: 'project',
       data: 'PTimes',
-      src: 'ptimes.png'
+      src: 'ptimes.png',
+      description: 'A digital news platform with real-time updates, personalized feeds, and multimedia content.'
     },
     {
       id: 4,
       type: 'project',
       data: 'Busgo',
-      src: 'busgo.png'
+      src: 'busgo.png',
+      description: 'A public transportation app with route planning, real-time tracking, and booking system.'
     },
     {
       id: 5,
       type: 'project',
       data: 'FutureMakers',
-      src: 'futuremakers.png'
+      src: 'futuremakers.png',
+      description: 'An educational platform connecting learners with mentors for skill development and career growth.'
     },
     {
       id: 6,
       type: 'experience',
       data: 'Web Development',
       description:
-        'Design and development with HTML, CSS, JS. React is my current preferred framwork for web.',
+        'Full-stack web development using HTML, CSS, and JavaScript. React is my preferred framework for building modern, responsive web applications.',
       src: 'azurlane.jpg'
     },
     {
@@ -49,15 +56,15 @@ const AnimatedFilter = ({ tag }) => {
       type: 'experience',
       data: 'Mobile App Development',
       description:
-        'Design and deploy mobile hybrid applications with React Native and Flutter.',
+        'Cross-platform mobile application development using React Native and Flutter. Design, build, and deploy native-feeling apps for iOS and Android.',
       src: 'azurlane.jpg'
     },
     {
       id: 8,
       type: 'experience',
-      data: 'Backend Developemnt',
+      data: 'Backend Development',
       description:
-        'Experience in Backend Development with NodeJS, PHP and currently in demand AWS infrastructure',
+        'Backend development expertise with Node.js and PHP. Experience deploying and managing scalable applications on AWS cloud infrastructure.',
       src: 'azurlane.jpg'
     }
   ]
@@ -74,16 +81,22 @@ const AnimatedFilter = ({ tag }) => {
         <div className="tags"></div>
       </Box> */}
       {/* <Box> */}
-      <Tabs variant="soft-rounded" colorScheme="green" id="projects-tabs">
-        <TabList>
+      <Tabs variant="soft-rounded" colorScheme="gray" id="projects-tabs">
+        <TabList mb={4} justifyContent="center" spacing={0}>
           {dataType.map((t, idx) => (
             <Tab
               key={idx}
               onClick={() => setType(t)}
               // className={'tag'}
               className={`tag ${t === type ? 'active' : ''}`}
+              color='whiteAlpha.900'
+              bg={secondaryBg}
+              px={6}
+              py={3}
+              mx={1}
+              _selected={{ color: 'whiteAlpha.900', bg: accentColor }}
             >
-              <span> {t}</span>
+              <span> {t.charAt(0).toUpperCase() + t.slice(1)}</span>
             </Tab>
           ))}
           {/* <button onClick={() => setType(null)}>clear</button> */}
@@ -127,7 +140,7 @@ const AnimatedFilter = ({ tag }) => {
                       <img src={pr.src} style={{ objectFit: 'cover' }} />
                       <div className="proj-txtx">
                         <h4>{pr.data}</h4>
-                        <span>{pr.data}</span>
+                        <span>{pr.description}</span>
                       </div>
                     </div>
                   </motion.div>

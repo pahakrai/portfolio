@@ -11,15 +11,15 @@ const Main = ({ children, router }) => {
         <title>Pahak Rai - Homepage</title>
       </Head>
       {/* <Navbar path={router.asPath} /> */}
-      <LazyModel onClickTag={t => setTag(t)} />
+      <LazyModel />
       <Container
         pt={14}
-        alignItems={'auto'}
+        alignItems="center"
         w="100%"
         maxWidth="100%"
-        paddingInline={0}
-        position="absolute"
-        // zIndex={99}
+        px={{ base: 4, md: 8 }}
+        position="relative"
+        zIndex={1}
       >
         {children}
       </Container>

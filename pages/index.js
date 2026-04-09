@@ -6,7 +6,9 @@ import {
   Heading,
   Image,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  Flex,
+  Stack
 } from '@chakra-ui/react'
 import Section from '../components/section'
 import Paragraph from '../components/paragraph'
@@ -19,9 +21,11 @@ import Skills from '../components/skills'
 
 const Home = () => {
   const [tag, setTag] = useState(null)
+  const accentColor = useColorModeValue('#88ccca', '#FFD700')
+  const secondaryBg = useColorModeValue('#e8e0d5', '#2d2d32')
   return (
     <Container maxWidth={'container.xl'}>
-      <Box className="shape" alignItems={'center'} justifyContent="center">
+      <Box className="shape" display="flex" flexDirection="column" alignItems="center" justifyContent="center" mb={6}>
         <Box
           flexShrink={0}
           mt={{ base: 4, md: 0 }}
@@ -30,28 +34,31 @@ const Home = () => {
         >
           <Image
             borderColor="whiteAlpha.800"
-            borderwidth={2}
+            borderWidth={2}
             borderStyle="solid"
-            height="100px"
-            width="100px"
+            height="120px"
+            width="120px"
             display="inline-block"
             borderRadius="full"
+            objectFit="cover"
             src="/images/pahak.png"
             alt="Profile Image"
           />
         </Box>
-        <div className="headingWrapper color-bright">
+        <svg className="headingWrapper color-bright" width="100%" >
           <text
             id="text"
-            transform="translate(2,116)"
+            x="50%"
+            y="70%"
             fontFamily="'Cabin Condensed'"
-            fontSize="161.047"
+            fontSize="160"
             className="header header--pushDown header--shadow"
+            textAnchor="middle"
           >
             PAHAK RAI
           </text>
-        </div>
-        <Text fontSize="md" alignItems={'center'}>
+        </svg>
+        <Text fontSize="lg" textAlign="center" mt={2}>
           Developer / Designer
         </Text>
       </Box>
@@ -94,7 +101,7 @@ const Home = () => {
         >
           {/* <Image
             borderColor="whiteAlpha.800"
-            borderwidth={2}
+            borderWidth={2}
             borderStyle="solid"
             maxWidth="100px"
             display="inline-block"
@@ -109,13 +116,11 @@ const Home = () => {
           Work
         </Heading>
         <Paragraph>
-          I am a full stack developer looking for more freelance opportunities
-          to provide solutions as services. If I am not coding I would be
-          dabbling with music or hiking.
+          As a seasoned full-stack developer, I specialize in creating robust digital solutions and delivering high-quality software services. My expertise spans across modern web technologies, enabling me to build scalable applications from concept to deployment. When not architecting code, I find inspiration in music composition and outdoor exploration.
         </Paragraph>
         <Box align="center" my={4}>
           <NextLink href="https://github.com/pahakrai">
-            <Button rightIcon={<ChevronRightIcon />} colorScheme="teal">
+            <Button rightIcon={<ChevronRightIcon />} bg={secondaryBg} _hover={{ bg: accentColor }} color='whiteAlpha.900'>
               Github
             </Button>
           </NextLink>
@@ -127,12 +132,11 @@ const Home = () => {
         </Heading>
         <BioSection>
           <BioYear>1987</BioYear>
-          Born in Kathmandu, Nepal
+          Born in Kathmandu, Nepal, with a multicultural perspective that informs my approach to global software solutions.
         </BioSection>
         <BioSection>
           <BioYear>2012</BioYear>
-          Completed the Master&apos;s Mobile Computing at University of West
-          London
+          Earned a Master&apos;s degree in Mobile Computing from the University of West London, specializing in mobile application development and emerging technologies.
         </BioSection>
       </Section>
       <Section>
@@ -141,11 +145,53 @@ const Home = () => {
       <Section>
         <Skills />
       </Section>
-      <Box align="center" mt={{ base: 6 }} mb={{ base: 6 }}>
-        <a href="#" className="neonButton">
-          eat; sleep; code; repeat;
-        </a>
-      </Box>
+      <Section delay={0.3}>
+        <Heading as="h3" variant="section-title" mb={6}>
+          Contact
+        </Heading>
+        <Stack spacing={4} align="center" justify="center">
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            align="center"
+            justify="center"
+            spacing={6}
+            wrap="wrap"
+          >
+            <a
+              href="https://wa.me/85263540451"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="neonButton"
+              aria-label="Contact via WhatsApp"
+              title="Open WhatsApp to message +45 64 54 04 51"
+              style={{
+                margin: '8px 16px',
+                backgroundColor: accentColor
+              }}
+            >
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '4px' }}>Phone</div>
+                <div style={{ fontSize: '0.875rem', opacity: 0.9 }}>+852 63540451</div>
+              </div>
+            </a>
+            <a
+              href="mailto:rai.pahak@gmail.com"
+              className="neonButton"
+              aria-label="Send email"
+              title="Open email client to send message to rai.pahak@gmail.com"
+              style={{
+                margin: '8px 16px',
+                backgroundColor: accentColor
+              }}
+            >
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '4px' }}>Email</div>
+                <div style={{ fontSize: '0.875rem', opacity: 0.9 }}>rai.pahak@gmail.com</div>
+              </div>
+            </a>
+          </Flex>
+        </Stack>
+      </Section>
     </Container>
   )
 }

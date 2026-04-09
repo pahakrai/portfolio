@@ -19,13 +19,25 @@ import ThemeToggleButton from './theme-toggle-button'
 
 const LinkItem = ({ href, path, children }) => {
   const active = path === href
-  const inactiveColor = useColorModeValue('gray200', 'whiteAlpha.900')
+  const inactiveColor = 'whiteAlpha.900'
+  const accentColor = useColorModeValue('#88ccca', '#FFD700')
+  const secondaryBg = useColorModeValue('#e8e0d5', '#2d2d32')
+
   return (
     <NextLink href={href}>
       <Link
-        p={2}
-        bg={active ? 'glassTeal' : undefined}
-        color={active ? '#202023' : inactiveColor}
+        p={3}
+        bg={active ? accentColor : undefined}
+        color={active ? 'whiteAlpha.900' : inactiveColor}
+        fontSize="lg"
+        fontWeight="medium"
+        borderRadius="md"
+        _hover={{
+          textDecoration: 'none',
+          bg: active ? accentColor : secondaryBg,
+          transform: 'translateY(-2px)',
+          transition: 'all 0.2s'
+        }}
       >
         {children}
       </Link>
@@ -35,12 +47,15 @@ const LinkItem = ({ href, path, children }) => {
 
 const Navbar = props => {
   const { path } = props
+  const accentColor = useColorModeValue('#88ccca', '#FFD700')
+  const secondaryBg = useColorModeValue('#e8e0d5', '#2d2d32')
+  const navbarBg = useColorModeValue('#e8e0d540', '#2d2d3280')
   return (
     <Box
       position="fixed"
       as="nav"
       w="100%"
-      bg={useColorModeValue('#ffffff40', '#20202380')}
+      bg={navbarBg}
       style={{ backdropFilter: 'blur(10px)' }}
       zIndex={1}
       {...props}
@@ -48,13 +63,13 @@ const Navbar = props => {
       <Container
         display="flex"
         p={2}
-        maxW="container.lg.md"
+        maxW="container.lg"
         wrap="wrap"
         align="center"
         justify="space-between"
       >
         <Flex align="center" mr={5}>
-          <Heading as="h1" size="lg" letterSpacing={'tighter'}>
+          <Heading as="h1" size="lg" letterSpacing={'tighter'} color='whiteAlpha.900'>
             <Logo />
           </Heading>
         </Flex>
@@ -82,16 +97,25 @@ const Navbar = props => {
                 icon={<HamburgerIcon />}
                 variant="outline"
                 aria-label="Options"
+                color='whiteAlpha.900'
+                borderColor='whiteAlpha.900'
+                bg={secondaryBg}
+                _hover={{ bg: accentColor }}
               />
-              <MenuList>
+              <MenuList
+                bg={secondaryBg}
+                color='whiteAlpha.900'
+                borderColor={secondaryBg}
+                style={{ backdropFilter: 'blur(10px)' }}
+              >
                 <NextLink href="/" passHref>
-                  <MenuItem as={Link}>About</MenuItem>
+                  <MenuItem as={Link} _hover={{ bg: accentColor }} fontSize="md" py={2}>About</MenuItem>
                 </NextLink>
                 <NextLink href="/works" passHref>
-                  <MenuItem as={Link}>Works</MenuItem>
+                  <MenuItem as={Link} _hover={{ bg: accentColor }} fontSize="md" py={2}>Works</MenuItem>
                 </NextLink>
                 <NextLink href="/posts" passHref>
-                  <MenuItem as={Link}>Posts</MenuItem>
+                  <MenuItem as={Link} _hover={{ bg: accentColor }} fontSize="md" py={2}>Posts</MenuItem>
                 </NextLink>
               </MenuList>
             </Menu>

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -c components/three-water.js)",
+      "Bash(npm run:*)",
+      "Bash(node -c components/logo.js)",
+      "Bash(node -c components/navbar.js)",
+      "Bash(node -c components/theme-toggle-button.js)",
+      "Bash(node -c lib/theme.js)",
+      "Bash(node -c components/filter-animated.js)",
+      "Bash(xargs grep:*)"
+    ]
+  }
+}
